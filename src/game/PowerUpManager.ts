@@ -4,7 +4,10 @@ export enum PowerUpType {
   TIME_BONUS = 'TIME_BONUS',
   SCORE_MULTIPLIER = 'SCORE_MULTIPLIER',
   INVINCIBILITY = 'INVINCIBILITY',
-  SLOW_MOTION = 'SLOW_MOTION'
+  SLOW_MOTION = 'SLOW_MOTION',
+  AUTO_MATCH = 'AUTO_MATCH',
+  SHIELD = 'SHIELD',
+  STAR_SHOWER = 'STAR_SHOWER'
 }
 
 export interface ActivePowerUp {
@@ -154,5 +157,100 @@ export class PowerUpManager {
   // Invincibility check
   public isInvincible(): boolean {
     return this.isActive(PowerUpType.INVINCIBILITY);
+  }
+
+  // Shield check
+  public hasShield(): boolean {
+    return this.isActive(PowerUpType.SHIELD);
+  }
+
+  public consumeShield(): void {
+    this.activePowerUps.delete(PowerUpType.SHIELD);
+  }
+
+  // Auto match check
+  private autoMatchCount: number = 0;
+
+  public activateAutoMatch(count: number = 3): void {
+    this.autoMatchCount = count;
+    this.addPowerUp({
+      type: PowerUpType.AUTO_MATCH,
+      startTime: Date.now(),
+      duration: 0
+    });
+  }
+
+  public hasAutoMatch(): boolean {
+    return this.autoMatchCount > 0;
+  }
+
+  public consumeAutoMatch(): void {
+    if (this.autoMatchCount > 0) {
+      this.autoMatchCount--;
+      if (this.autoMatchCount === 0) {
+        this.activePowerUps.delete(PowerUpType.AUTO_MATCH);
+      }
+    }
+  }
+
+  public getAutoMatchCount(): number {
+    return this.autoMatchCount;
+  }
+
+  // Star shower check
+  public isStarShowerActive(): boolean {
+    return this.isActive(PowerUpType.STAR_SHOWER);
+  }
+
+  // Activate generic powerup by type
+  public activatePowerUpByType(type: PowerUpType, duration: number = 5000): void {
+    const now = Date.now();
+
+    switch (type) {
+      case PowerUpType.SLOW_MOTION:
+        this.addPowerUp({
+          type: PowerUpType.SLOW_MOTION,
+          startTime: now,
+          duration
+        });
+        break;
+
+      case PowerUpType.SCORE_MULTIPLIER:
+        this.addPowerUp({
+          type: PowerUpType.SCORE_MULTIPLIER,
+          startTime: now,
+          duration,
+          multiplier: 2.0
+        });
+        break;
+
+      case PowerUpType.SHIELD:
+        this.addPowerUp({
+          type: PowerUpType.SHIELD,
+          startTime: now,
+          duration: 0
+        });
+        break;
+
+      case PowerUpType.STAR_SHOWER:
+        this.addPowerUp({
+          type: PowerUpType.STAR_SHOWER,
+          startTime: now,
+          duration
+        });
+        break;
+
+      case PowerUpType.AUTO_MATCH:
+        this.activateAutoMatch(3);
+        break;
+
+      case PowerUpType.INVINCIBILITY:
+        this.addPowerUp({
+          type: PowerUpType.INVINCIBILITY,
+          startTime: now,
+          duration
+        });
+        break;
+    }
   }
 }

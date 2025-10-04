@@ -807,28 +807,28 @@
 
 #### 6.3 애니메이션 [P1]
 
-- [ ] **6.3.1** 도형 회전 애니메이션
+- [x] **6.3.1** 도형 회전 애니메이션
 
   - 떨어지면서 360도 회전
   - rotation 속성 업데이트
   - 테스트: 도형이 회전하면서 떨어지는지 확인
   - 커밋: `feat(animation): add shape rotation animation`
 
-- [ ] **6.3.2** 캐처 바운스 애니메이션
+- [x] **6.3.2** 캐처 바운스 애니메이션
 
   - 캐치 성공 시 살짝 튕김
   - GSAP 사용
   - 테스트: 바운스 애니메이션이 동작하는지 확인
   - 커밋: `feat(animation): add catcher bounce on catch`
 
-- [ ] **6.3.3** UI 트랜지션 애니메이션
+- [x] **6.3.3** UI 트랜지션 애니메이션
 
   - Framer Motion으로 모든 UI 요소 애니메이션
   - Fade, Slide 효과
   - 테스트: UI 전환이 부드러운지 확인
   - 커밋: `feat(animation): add smooth UI transitions`
 
-- [ ] **6.3.4** 레벨 전환 애니메이션
+- [x] **6.3.4** 레벨 전환 애니메이션
   - 와이프 효과
   - 테마 색상 변화
   - 테스트: 레벨 전환 애니메이션 확인
@@ -836,7 +836,7 @@
 
 #### 6.4 ScorePopup 컴포넌트 [P1]
 
-- [ ] **6.4.1** ScorePopup 컴포넌트 생성
+- [x] **6.4.1** ScorePopup 컴포넌트 생성
 
   - src/components/UI/ScorePopup.tsx 생성
   - 점수 획득 시 팝업 표시
@@ -844,7 +844,7 @@
   - 테스트: 점수 팝업이 표시되는지 확인
   - 커밋: `feat(ui): create score popup component`
 
-- [ ] **6.4.2** 특수 도형 점수 표시
+- [x] **6.4.2** 특수 도형 점수 표시
   - 배율 표시 (x2, x1.5, x3)
   - 색상 구분
   - 테스트: 특수 점수가 정확하게 표시되는지 확인
@@ -993,7 +993,7 @@
 
 #### 8.1 파워업 시스템 [P1]
 
-- [ ] **8.1.1** PowerUp 타입 정의
+- [x] **8.1.1** PowerUp 타입 정의
 
   - src/types/powerup.types.ts 생성
   - PowerUpType enum (SlowTime, AutoMatch, DoubleScore, Shield, StarShower)
@@ -1001,14 +1001,14 @@
   - 테스트: 타입 정의 확인
   - 커밋: `feat(types): define powerup types`
 
-- [ ] **8.1.2** PowerUpConfig 작성
+- [x] **8.1.2** PowerUpConfig 작성
 
   - src/config/powerUpConfig.ts 생성
   - 각 파워업의 이름, 설명, 아이콘, 지속시간
   - 테스트: 설정 데이터 확인
   - 커밋: `feat(config): add powerup configurations`
 
-- [ ] **8.1.3** PowerUpManager 클래스
+- [x] **8.1.3** PowerUpManager 클래스
 
   - src/game/PowerUpManager.ts 생성
   - activePowerUps 배열 관리
@@ -1016,7 +1016,7 @@
   - 테스트: 파워업 활성화/비활성화 확인
   - 커밋: `feat(game): create powerup manager`
 
-- [ ] **8.1.4** 파워업 인벤토리
+- [x] **8.1.4** 파워업 인벤토리
   - gameStore에 powerUpInventory 추가
   - 파워업 획득 시 인벤토리에 추가
   - 테스트: 인벤토리가 정확하게 업데이트되는지 확인
@@ -1024,7 +1024,7 @@
 
 #### 8.2 개별 파워업 구현 [P1]
 
-- [ ] **8.2.1** 슬로우 타임 파워업
+- [x] **8.2.1** 슬로우 타임 파워업
 
   - 낙하 속도 50% 감소
   - 5초 지속
@@ -1032,7 +1032,7 @@
   - 테스트: 슬로우 타임이 정확하게 동작하는지 확인
   - 커밋: `feat(powerup): implement slow time powerup`
 
-- [ ] **8.2.2** 오토 매치 파워업
+- [x] **8.2.2** 오토 매치 파워업
 
   - 다음 3개 도형 자동 매칭
   - 카운트 기반 (3회)
@@ -1040,7 +1040,7 @@
   - 테스트: 오토 매치가 정확하게 동작하는지 확인
   - 커밋: `feat(powerup): implement auto match powerup`
 
-- [ ] **8.2.3** 더블 스코어 파워업
+- [x] **8.2.3** 더블 스코어 파워업
 
   - 모든 점수 2배
   - 10초 지속
@@ -1048,7 +1048,7 @@
   - 테스트: 더블 스코어가 정확하게 적용되는지 확인
   - 커밋: `feat(powerup): implement double score powerup`
 
-- [ ] **8.2.4** 쉴드 파워업
+- [x] **8.2.4** 쉴드 파워업
 
   - 1회 실수 무효화
   - 폭탄 방어 가능
@@ -1056,7 +1056,7 @@
   - 테스트: 쉴드가 정확하게 동작하는지 확인
   - 커밋: `feat(powerup): implement shield powerup`
 
-- [ ] **8.2.5** 스타 쇼워 파워업
+- [x] **8.2.5** 스타 쇼워 파워업
   - 5초간 모든 도형이 다이아몬드로 변경
   - ShapeManager에 효과 적용
   - 테스트: 스타 쇼워가 정확하게 동작하는지 확인
@@ -1064,7 +1064,7 @@
 
 #### 8.3 파워업 UI [P1]
 
-- [ ] **8.3.1** PowerUpBar 컴포넌트
+- [x] **8.3.1** PowerUpBar 컴포넌트
 
   - src/components/Game/PowerUpBar.tsx 생성
   - 인벤토리 파워업 표시
@@ -1072,7 +1072,7 @@
   - 테스트: 파워업 인벤토리가 정확하게 표시되는지 확인
   - 커밋: `feat(ui): create powerup bar component`
 
-- [ ] **8.3.2** 파워업 활성화 UI
+- [x] **8.3.2** 파워업 활성화 UI
 
   - 클릭/터치로 파워업 사용
   - 활성화된 파워업 강조 표시
@@ -1080,7 +1080,7 @@
   - 테스트: 파워업 사용 UI가 정상 동작하는지 확인
   - 커밋: `feat(ui): add powerup activation interface`
 
-- [ ] **8.3.3** 파워업 효과 애니메이션
+- [x] **8.3.3** 파워업 효과 애니메이션
   - 활성화 시 시각적 효과
   - 아이콘 펄스 애니메이션
   - 테스트: 애니메이션이 부드럽게 동작하는지 확인
