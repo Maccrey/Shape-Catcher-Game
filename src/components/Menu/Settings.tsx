@@ -118,18 +118,21 @@ export const Settings: React.FC<SettingsProps> = ({
 
           {/* Accessibility Settings */}
           <SettingsSection title="Accessibility">
-            <ToggleSetting
+            <ToggleSettingWithDescription
               label="Color Blind Mode"
+              description="Adds patterns to shapes for easier color distinction"
               value={settings.colorBlindMode}
               onChange={v => updateSetting('colorBlindMode', v)}
             />
-            <ToggleSetting
+            <ToggleSettingWithDescription
               label="Reduce Motion"
+              description="Minimizes animations and visual effects for comfort"
               value={settings.reduceMotion}
               onChange={v => updateSetting('reduceMotion', v)}
             />
-            <ToggleSetting
+            <ToggleSettingWithDescription
               label="High Contrast"
+              description="Increases color contrast for better visibility"
               value={settings.highContrast}
               onChange={v => updateSetting('highContrast', v)}
             />
@@ -216,5 +219,32 @@ const SliderSetting: React.FC<{
         accentColor: '#3b82f6'
       }}
     />
+  </div>
+);
+
+const ToggleSettingWithDescription: React.FC<{
+  label: string;
+  description: string;
+  value: boolean;
+  onChange: (value: boolean) => void;
+}> = ({ label, description, value, onChange }) => (
+  <div className="p-3 bg-gray-800/50 rounded-lg">
+    <div className="flex items-center justify-between mb-1">
+      <span className="text-white font-medium">{label}</span>
+      <button
+        onClick={() => onChange(!value)}
+        className={`relative w-14 h-7 rounded-full transition-colors ${
+          value ? 'bg-blue-600' : 'bg-gray-600'
+        }`}
+        aria-label={`${label}: ${value ? 'enabled' : 'disabled'}`}
+      >
+        <motion.div
+          className="absolute top-1 w-5 h-5 bg-white rounded-full"
+          animate={{ left: value ? 32 : 4 }}
+          transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+        />
+      </button>
+    </div>
+    <p className="text-sm text-gray-400">{description}</p>
   </div>
 );
