@@ -1,6 +1,24 @@
 /**
  * WCAG 2.1 Contrast Checker
  * Ensures color combinations meet accessibility standards
+ *
+ * WCAG Contrast Requirements:
+ * - Level AA (Normal text): 4.5:1 minimum
+ * - Level AA (Large text 18pt+): 3:1 minimum
+ * - Level AAA (Normal text): 7:1 minimum
+ * - Level AAA (Large text): 4.5:1 minimum
+ *
+ * @example
+ * ```ts
+ * // Check contrast between white text on blue background
+ * const result = ContrastChecker.checkContrast('#FFFFFF', '#0066CC', false);
+ * console.log(result.ratio); // 5.89
+ * console.log(result.meetsAA); // true
+ *
+ * // Audit all game colors
+ * const report = ContrastChecker.auditGameColors();
+ * console.log(report.summary); // { totalPairs: 25, passing: 23, failing: 2 }
+ * ```
  */
 
 export interface ContrastResult {

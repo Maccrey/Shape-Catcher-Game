@@ -10,6 +10,25 @@ import { GameStatus } from '../types/game.types';
 import { DoubleBuffer } from '../utils/canvasUtils';
 import { drawShape } from '../utils/renderUtils';
 
+/**
+ * GameEngine - Core orchestrator for the Shape Catcher game
+ *
+ * This class coordinates all major game systems including:
+ * - Game loop execution (update/render cycle at 60fps)
+ * - Physics simulation for falling shapes
+ * - Input handling (keyboard and touch)
+ * - Collision detection and matching logic
+ * - Particle effects system
+ * - Audio playback
+ * - Canvas rendering with double buffering
+ *
+ * @example
+ * ```ts
+ * const engine = new GameEngine();
+ * engine.initialize(canvasElement);
+ * engine.start();
+ * ```
+ */
 export class GameEngine {
   private gameLoop: GameLoop;
   private physicsEngine: PhysicsEngine;
@@ -20,8 +39,13 @@ export class GameEngine {
   private mainCanvas: HTMLCanvasElement | null = null;
   private mainCtx: CanvasRenderingContext2D | null = null;
 
+  /** Timestamp of the last shape spawn to control spawn intervals */
   private lastShapeSpawn: number = 0;
 
+  /**
+   * Creates a new GameEngine instance
+   * Initializes all subsystems and binds callbacks
+   */
   constructor() {
     this.gameLoop = new GameLoop();
     this.physicsEngine = new PhysicsEngine();
@@ -34,6 +58,13 @@ export class GameEngine {
     this.gameLoop.setRenderCallback(this.render.bind(this));
   }
 
+  /**
+   * Initializes the engine with a canvas element
+   * Must be called before start()
+   *
+   * @param canvas - The HTML canvas element to render to
+   * @throws {Error} If canvas context cannot be obtained
+   */
   public initialize(canvas: HTMLCanvasElement): void {
     this.mainCanvas = canvas;
     const ctx = canvas.getContext('2d');
@@ -45,6 +76,10 @@ export class GameEngine {
     this.doubleBuffer = new DoubleBuffer(ctx);
   }
 
+  /**
+   * Starts the game loop
+   * Call after initialize()
+   */
   public start(): void {
     if (!this.mainCanvas || !this.mainCtx) {
       console.error('GameEngine not initialized with canvas');
@@ -54,20 +89,36 @@ export class GameEngine {
     this.gameLoop.start();
   }
 
+  /**
+   * Stops the game loop completely
+   * Use pause() for temporary halts
+   */
   public stop(): void {
     this.gameLoop.stop();
   }
 
+  /**
+   * Pauses the game
+   * Game state is preserved and can be resumed
+   */
   public pause(): void {
     this.gameLoop.pause();
     useGameStore.getState().pauseGame();
   }
 
+  /**
+   * Resumes the game from paused state
+   */
   public resume(): void {
     this.gameLoop.resume();
     useGameStore.getState().resumeGame();
   }
 
+  /**
+   * Sets up input event handlers
+   * Maps input actions to game state updates
+   * @private
+   */
   private setupInputHandlers(): void {
     this.inputManager.on(InputAction.MOVE_LEFT, () => {
       useGameStore.getState().moveCatcherLeft();
@@ -97,6 +148,21 @@ export class GameEngine {
     });
   }
 
+  /**
+   * Main update loop called by GameLoop
+   * Updates all game systems in order:
+   * 1. Time tracking
+   * 2. Combo system
+   * 3. Particles
+   * 4. Catcher
+   * 5. Shape spawning
+   * 6. Physics simulation
+   * 7. Collision detection
+   * 8. Cleanup off-screen shapes
+   *
+   * @param deltaTime - Time elapsed since last frame in milliseconds
+   * @private
+   */
   private update = (deltaTime: number): void => {
     const gameState = useGameStore.getState();
 
@@ -133,6 +199,18 @@ export class GameEngine {
     }
   };
 
+  /**
+   * Main render loop called by GameLoop
+   * Renders all visual elements using double buffering:
+   * 1. Background
+   * 2. Falling shapes
+   * 3. Catcher
+   * 4. Particle effects
+   * 5. UI elements
+   *
+   * @param _interpolation - Frame interpolation value (currently unused)
+   * @private
+   */
   private render = (_interpolation: number): void => {
     if (!this.doubleBuffer) return;
 
@@ -186,6 +264,16 @@ export class GameEngine {
     this.doubleBuffer.present();
   };
 
+  /**
+   * Handles shape spawning based on level configuration
+   * Spawns regular shapes, special shapes, or bombs based on:
+   * - Level spawn interval
+   * - Special shape probability
+   * - Bomb probability
+   *
+   * @param _deltaTime - Time elapsed since last frame (currently unused)
+   * @private
+   */
   private updateShapeSpawning(_deltaTime: number): void {
     const gameState = useGameStore.getState();
     const levelConfig = gameState.levelManager.getCurrentLevelConfig();
@@ -245,6 +333,25 @@ export class GameEngine {
     }
   }
 
+  /**
+   * Checks for collisions between shapes and catcher
+   * Handles both successful catches and failures:
+   *
+   * Success:
+   * - Adds score based on shape multiplier
+   * - Increments combo
+   * - Plays success audio
+   * - Emits success particles
+   * - Handles special shape effects
+   *
+   * Failure/Bomb:
+   * - Decrements lives
+   * - Resets combo
+   * - Plays miss/explosion audio
+   * - Emits explosion particles
+   *
+   * @private
+   */
   private checkCollisions(): void {
     const gameState = useGameStore.getState();
     const catcher = gameState.catcher;
@@ -324,6 +431,21 @@ export class GameEngine {
     });
   }
 
+  /**
+   * Renders the game UI overlay on the canvas
+   * Displays:
+   * - Score
+   * - Level number
+   * - Lives remaining
+   * - Time/Progress
+   * - Combo counter and timer bar
+   * - Combo tier messages
+   * - Current catcher shape and color
+   *
+   * @param ctx - Canvas rendering context
+   * @param gameState - Current game state from store
+   * @private
+   */
   private drawUI(ctx: CanvasRenderingContext2D, gameState: any): void {
     ctx.fillStyle = '#ffffff';
     ctx.font = '20px Arial';
@@ -387,6 +509,13 @@ export class GameEngine {
     ctx.fillText(`Color: ${gameState.catcher.currentColor}`, ctx.canvas.width - 20, 55);
   }
 
+  /**
+   * Renders menu screens (main menu or game over)
+   *
+   * @param ctx - Canvas rendering context
+   * @param gameState - Current game state from store
+   * @private
+   */
   private drawMenuScreen(ctx: CanvasRenderingContext2D, gameState: any): void {
     ctx.fillStyle = '#ffffff';
     ctx.font = '32px Arial';
@@ -403,6 +532,11 @@ export class GameEngine {
     }
   }
 
+  /**
+   * Cleans up engine resources
+   * Stops the game loop and removes input listeners
+   * Call when unmounting or destroying the game
+   */
   public cleanup(): void {
     this.gameLoop.stop();
     this.inputManager.cleanup();

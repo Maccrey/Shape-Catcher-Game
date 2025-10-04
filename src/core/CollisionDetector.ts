@@ -3,14 +3,40 @@ import { Catcher } from '../game/entities/Catcher';
 import { ShapeType, ShapeColor, SpecialShapeType } from '../types/shape.types';
 import { COLLISION_BUFFER } from '../config/constants';
 
+/**
+ * Result of a collision check between a shape and catcher
+ */
 export interface CollisionResult {
+  /** Whether a physical collision occurred */
   hasCollision: boolean;
+  /** Whether the shape matches the catcher's configuration */
   isMatch: boolean;
+  /** The shape involved in the collision */
   shape: Shape;
+  /** The catcher involved in the collision */
   catcher: Catcher;
 }
 
+/**
+ * CollisionDetector - Handles collision detection and matching logic
+ *
+ * Uses Axis-Aligned Bounding Box (AABB) algorithm for efficient collision detection.
+ * Implements special matching rules for different shape types:
+ * - Regular shapes: Exact shape + color match required
+ * - Diamond: Only color match required (2x score)
+ * - Rainbow: Only shape match required (1.5x score)
+ * - Golden Star: Exact match required (3x score)
+ * - Bomb: Always triggers on collision (negative effect)
+ */
 export class CollisionDetector {
+  /**
+   * Checks for collision between a shape and the catcher
+   * Uses AABB (Axis-Aligned Bounding Box) algorithm with configurable buffer
+   *
+   * @param shape - The falling shape to check
+   * @param catcher - The player's catcher
+   * @returns CollisionResult containing collision status and match validity
+   */
   public static checkCollision(shape: Shape, catcher: Catcher): CollisionResult {
     const shapeBounds = shape.getBounds();
     const catcherBounds = catcher.getBounds();
@@ -33,6 +59,14 @@ export class CollisionDetector {
     };
   }
 
+  /**
+   * Determines if a shape matches the catcher's current configuration
+   * Applies different rules for special shapes
+   *
+   * @param shape - The shape to check
+   * @param catcher - The catcher to match against
+   * @returns true if the shape matches, false otherwise
+   */
   public static isMatch(shape: Shape, catcher: Catcher): boolean {
     // Special shapes have different matching rules
     if (shape.isSpecialShape()) {
@@ -46,6 +80,15 @@ export class CollisionDetector {
     );
   }
 
+  /**
+   * Applies special matching rules for non-regular shapes
+   * Each special shape type has unique matching criteria
+   *
+   * @param shape - The special shape to check
+   * @param catcher - The catcher to match against
+   * @returns true if the special shape's criteria are met
+   * @private
+   */
   private static isSpecialShapeMatch(shape: Shape, catcher: Catcher): boolean {
     const specialType = shape.getSpecialType();
 

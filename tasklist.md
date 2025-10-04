@@ -1611,7 +1611,7 @@
 
 #### 12.6 문서화 [P1]
 
-- [ ] **12.6.1** README.md 작성
+- [x] **12.6.1** README.md 작성
 
   - 프로젝트 소개
   - 빠른 시작 가이드
@@ -1619,14 +1619,14 @@
   - 테스트: README 내용 검증
   - 커밋: `docs(readme): add comprehensive project documentation`
 
-- [ ] **12.6.2** 코드 주석 추가
+- [x] **12.6.2** 코드 주석 추가
 
   - 복잡한 로직에 주석
   - JSDoc 스타일 함수 문서
   - 테스트: 주석 가독성 확인
   - 커밋: `docs(code): add comments and jsdoc annotations`
 
-- [ ] **12.6.3** CHANGELOG.md 작성
+- [x] **12.6.3** CHANGELOG.md 작성
   - 버전별 변경사항 정리
   - 테스트: CHANGELOG 내용 검증
   - 커밋: `docs(changelog): create version changelog`
