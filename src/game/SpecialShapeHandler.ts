@@ -2,7 +2,7 @@ import { Shape } from './entities/Shape';
 import { Catcher } from './entities/Catcher';
 import { SpecialShapeType } from '../types/shape.types';
 import { CameraController } from '../core/CameraController';
-import { PowerUpManager } from './PowerUpManager';
+import { PowerUpManager, PowerUpType } from './PowerUpManager';
 import { AudioService } from '../services/AudioService';
 
 export interface SpecialShapeEffect {
@@ -129,6 +129,9 @@ export class SpecialShapeHandler {
     // Small camera effect
     this.cameraController.flash(300, 0.2);
 
+    // Drop a random powerup
+    this.dropRandomPowerUp();
+
     return {
       type: SpecialShapeType.GOLDEN_STAR,
       scoreBonus: 30, // Base score, will be multiplied by 3x
@@ -138,6 +141,40 @@ export class SpecialShapeHandler {
       shouldShakeCamera: false,
       message: 'GOLDEN STAR! 3x Points!'
     };
+  }
+
+  private dropRandomPowerUp(): void {
+    const powerUpTypes = [
+      { type: PowerUpType.SLOW_MOTION, duration: 5000, weight: 20 },
+      { type: PowerUpType.SCORE_MULTIPLIER, duration: 10000, weight: 25 },
+      { type: PowerUpType.SHIELD, duration: 0, weight: 15 },
+      { type: PowerUpType.STAR_SHOWER, duration: 5000, weight: 10 },
+      { type: PowerUpType.AUTO_MATCH, duration: 0, weight: 30 }
+    ];
+
+    // Calculate total weight
+    const totalWeight = powerUpTypes.reduce((sum, p) => sum + p.weight, 0);
+
+    // Random selection based on weight
+    let random = Math.random() * totalWeight;
+    let selectedPowerUp = powerUpTypes[0];
+
+    for (const powerUp of powerUpTypes) {
+      if (random < powerUp.weight) {
+        selectedPowerUp = powerUp;
+        break;
+      }
+      random -= powerUp.weight;
+    }
+
+    // Activate the selected powerup
+    this.powerUpManager.activatePowerUpByType(
+      selectedPowerUp.type,
+      selectedPowerUp.duration
+    );
+
+    // Play powerup collect sound
+    this.audioService.playPowerUp?.();
   }
 
   private handleDiamond(): SpecialShapeEffect {
