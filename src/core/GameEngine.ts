@@ -4,30 +4,30 @@ import { InputManager, InputAction } from './InputManager';
 import { CollisionDetector } from './CollisionDetector';
 import { ParticleSystem } from './ParticleSystem';
 import { ShapeFactory } from '../game/factories/ShapeFactory';
+import { AudioService } from '../services/AudioService';
 import { useGameStore } from '../store/gameStore';
 import { GameStatus } from '../types/game.types';
 import { DoubleBuffer } from '../utils/canvasUtils';
 import { drawShape } from '../utils/renderUtils';
-import { Shape } from '../game/entities/Shape';
-import { CANVAS_HEIGHT } from '../config/constants';
 
 export class GameEngine {
   private gameLoop: GameLoop;
   private physicsEngine: PhysicsEngine;
   private inputManager: InputManager;
   private particleSystem: ParticleSystem;
+  private audioService: AudioService;
   private doubleBuffer: DoubleBuffer | null = null;
   private mainCanvas: HTMLCanvasElement | null = null;
   private mainCtx: CanvasRenderingContext2D | null = null;
 
   private lastShapeSpawn: number = 0;
-  private shapeSpawnInterval: number = 2000; // 2 seconds
 
   constructor() {
     this.gameLoop = new GameLoop();
     this.physicsEngine = new PhysicsEngine();
     this.inputManager = InputManager.getInstance();
     this.particleSystem = new ParticleSystem();
+    this.audioService = AudioService.getInstance();
 
     this.setupInputHandlers();
     this.gameLoop.setUpdateCallback(this.update.bind(this));
@@ -79,10 +79,12 @@ export class GameEngine {
 
     this.inputManager.on(InputAction.CHANGE_SHAPE, () => {
       useGameStore.getState().changeCatcherShape();
+      this.audioService.playShapeChange();
     });
 
     this.inputManager.on(InputAction.CHANGE_COLOR, () => {
       useGameStore.getState().changeCatcherColor();
+      this.audioService.playShapeChange();
     });
 
     this.inputManager.on(InputAction.PAUSE, () => {
@@ -131,7 +133,7 @@ export class GameEngine {
     }
   };
 
-  private render = (interpolation: number): void => {
+  private render = (_interpolation: number): void => {
     if (!this.doubleBuffer) return;
 
     const gameState = useGameStore.getState();
@@ -184,7 +186,7 @@ export class GameEngine {
     this.doubleBuffer.present();
   };
 
-  private updateShapeSpawning(deltaTime: number): void {
+  private updateShapeSpawning(_deltaTime: number): void {
     const gameState = useGameStore.getState();
     const levelConfig = gameState.levelManager.getCurrentLevelConfig();
 
@@ -260,6 +262,13 @@ export class GameEngine {
           gameState.incrementCatch();
           gameState.incrementCombo();
 
+          // Play success sound
+          if (specialType) {
+            this.audioService.playSpecialShape();
+          } else {
+            this.audioService.playSuccess();
+          }
+
           // Special shape effects
           if (specialType) {
             switch (specialType) {
@@ -288,6 +297,7 @@ export class GameEngine {
           if (combo >= 5) {
             const tier = gameState.comboSystem.getCurrentTierIndex();
             this.particleSystem.emitCombo(shape.position, tier);
+            this.audioService.playCombo(tier);
           }
         } else {
           // Handle bomb collision
@@ -298,11 +308,13 @@ export class GameEngine {
             gameState.resetCombo();
             // TODO: Add stun effect to catcher
             this.particleSystem.emitExplosion(shape.position, '#ef4444');
+            this.audioService.playExplosion();
           } else {
             // Regular miss
             gameState.decrementLives();
             gameState.resetCombo();
             this.particleSystem.emitExplosion(shape.position);
+            this.audioService.playMiss();
           }
         }
 
@@ -327,9 +339,9 @@ export class GameEngine {
     ctx.fillText(`Lives: ${gameState.lives}`, 20, 90);
 
     // Progress
-    const levelConfig = gameState.levelManager.getCurrentLevelConfig();
     const progress = Math.floor(gameState.levelTime / 1000); // Convert to seconds as proxy for progress
-    ctx.fillText(`Progress: ${progress}/${levelConfig.targetCatches}`, 20, 120);
+    const timeTarget = 20; // 20 seconds per level
+    ctx.fillText(`Time: ${progress}/${timeTarget}s`, 20, 120);
 
     // Combo
     const combo = gameState.comboSystem.getCount();

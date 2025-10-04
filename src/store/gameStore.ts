@@ -5,6 +5,7 @@ import { Shape } from '../game/entities/Shape';
 import { Catcher } from '../game/entities/Catcher';
 import { ComboSystem } from '../game/ComboSystem';
 import { LevelManager } from '../game/LevelManager';
+import { AudioService } from '../services/AudioService';
 import { INITIAL_LIVES } from '../config/constants';
 
 export interface GameState {
@@ -173,9 +174,9 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   },
 
   incrementCatch: () => {
-    // Simple level completion after 30 seconds for now
+    // Simple level completion after 20 seconds for faster gameplay
     const { levelTime } = get();
-    if (levelTime > 30000) { // 30 seconds
+    if (levelTime > 20000) { // 20 seconds
       get().completeLevel();
     }
   },
@@ -191,6 +192,7 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   },
 
   completeLevel: () => {
+    AudioService.getInstance().playLevelComplete();
     set({ gameStatus: GameStatus.LEVEL_TRANSITION });
   },
 
