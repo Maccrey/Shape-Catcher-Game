@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { useGameStore } from '../../store/gameStore';
 import { GameStatus } from '../../types/game.types';
+import { ShareService } from '../../services/ShareService';
+import { ShareImageData } from '../../utils/shareImageGenerator';
 
 export const GameOverScreen: React.FC = () => {
   const {
@@ -9,8 +12,12 @@ export const GameOverScreen: React.FC = () => {
     gameTime,
     comboSystem,
     restartGame,
-    gameStatus
+    gameStatus,
+    statisticsManager
   } = useGameStore();
+
+  const [shareStatus, setShareStatus] = useState<'idle' | 'sharing' | 'success' | 'downloaded'>('idle');
+  const shareService = ShareService.getInstance();
 
   if (gameStatus !== GameStatus.GAME_OVER) {
     return null;
@@ -18,6 +25,8 @@ export const GameOverScreen: React.FC = () => {
 
   const currentLevel = levelManager.getCurrentLevel();
   const maxCombo = comboSystem.getMaxCombo();
+  const stats = statisticsManager?.getStatistics();
+  const accuracy = stats ? (stats.totalCatches / (stats.totalCatches + stats.totalMisses)) * 100 : 0;
 
   const formatTime = (time: number) => {
     const seconds = Math.floor(time / 1000);
@@ -100,6 +109,38 @@ export const GameOverScreen: React.FC = () => {
           transition={{ delay: 0.8 }}
           className="space-y-3"
         >
+          {/* Share Button */}
+          <button
+            onClick={async () => {
+              setShareStatus('sharing');
+              const shareData: ShareImageData = {
+                score,
+                level: currentLevel,
+                maxCombo,
+                totalCatches: stats?.totalCatches || 0,
+                accuracy,
+                mode: 'Classic'
+              };
+
+              const shared = await shareService.shareScore(shareData);
+              setShareStatus(shared ? 'success' : 'downloaded');
+
+              setTimeout(() => setShareStatus('idle'), 2000);
+            }}
+            disabled={shareStatus === 'sharing'}
+            className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 disabled:from-gray-500 disabled:to-gray-600 text-white font-bold py-4 px-6 rounded-lg text-lg shadow-lg transform hover:scale-105 transition-all duration-200 flex items-center justify-center gap-2"
+          >
+            {shareStatus === 'sharing' && '⏳ Preparing...'}
+            {shareStatus === 'success' && '✅ Shared!'}
+            {shareStatus === 'downloaded' && '📥 Downloaded!'}
+            {shareStatus === 'idle' && (
+              <>
+                <span>📤</span>
+                <span>Share Score</span>
+              </>
+            )}
+          </button>
+
           <button
             onClick={restartGame}
             className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 text-white font-bold py-4 px-6 rounded-lg text-lg shadow-lg transform hover:scale-105 transition-all duration-200"
