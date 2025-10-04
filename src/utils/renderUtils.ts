@@ -458,3 +458,81 @@ export function drawShape(
       break;
   }
 }
+
+export function drawCatcher(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  shapeType: ShapeType,
+  color: ShapeColor,
+  isStunned: boolean = false
+): void {
+  ctx.save();
+
+  // Draw catcher platform (base)
+  ctx.fillStyle = isStunned ? '#666666' : '#2c3e50';
+  ctx.strokeStyle = '#ffffff';
+  ctx.lineWidth = 3;
+
+  const platformHeight = height * 0.3;
+  const platformY = y + height / 2 - platformHeight / 2;
+
+  ctx.fillRect(
+    x - width / 2,
+    platformY,
+    width,
+    platformHeight
+  );
+  ctx.strokeRect(
+    x - width / 2,
+    platformY,
+    width,
+    platformHeight
+  );
+
+  // Draw current shape on top of platform
+  const shapeSize = height * 0.6;
+  const shapeY = y - height / 2 + shapeSize / 2;
+
+  if (isStunned) {
+    // Add visual effect for stunned state
+    ctx.globalAlpha = 0.5;
+  }
+
+  // Draw the shape that the catcher is configured to catch
+  switch (shapeType) {
+    case ShapeType.SQUARE:
+      drawSquare(ctx, x, shapeY, shapeSize, color, 0);
+      break;
+    case ShapeType.TRIANGLE:
+      drawTriangle(ctx, x, shapeY, shapeSize, color, 0);
+      break;
+    case ShapeType.CIRCLE:
+      drawCircle(ctx, x, shapeY, shapeSize, color, 0);
+      break;
+    case ShapeType.STAR:
+      drawStar(ctx, x, shapeY, shapeSize, color, 0);
+      break;
+  }
+
+  // Add stun effect overlay
+  if (isStunned) {
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = 'rgba(255, 255, 0, 0.3)';
+    ctx.fillRect(
+      x - width / 2,
+      y - height / 2,
+      width,
+      height
+    );
+
+    // Draw "stunned" stars
+    ctx.font = '20px Arial';
+    ctx.fillText('✨', x - width / 3, y - height / 2 - 5);
+    ctx.fillText('✨', x + width / 3, y - height / 2 - 5);
+  }
+
+  ctx.restore();
+}

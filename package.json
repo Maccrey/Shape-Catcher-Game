@@ -12,6 +12,7 @@
     "test:ui": "vitest --ui"
   },
   "dependencies": {
+    "@tailwindcss/postcss": "^4.1.14",
     "autoprefixer": "^10.4.16",
     "framer-motion": "^10.16.16",
     "gsap": "^3.12.2",

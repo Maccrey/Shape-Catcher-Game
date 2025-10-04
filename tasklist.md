@@ -213,7 +213,7 @@
   - 테스트: 각 타입의 도형이 정확하게 생성되는지 확인
   - 커밋: `feat(factory): implement shape factory pattern`
 
-- [ ] **2.1.3** ShapeManager 구현
+- [x] **2.1.3** ShapeManager 구현
 
   - src/game/ShapeManager.ts 생성
   - 도형 생성, 제거 관리
@@ -221,7 +221,7 @@
   - 테스트: 도형 생성 및 제거가 정상 동작하는지 확인
   - 커밋: `feat(game): create shape manager`
 
-- [ ] **2.1.4** 도형 생성 규칙 구현
+- [x] **2.1.4** 도형 생성 규칙 구현
   - 순차 생성 로직 (한 번에 1개)
   - 랜덤 X축 위치 (마진 20px)
   - 생성 타이밍 제어
@@ -230,7 +230,7 @@
 
 #### 2.2 캐처 시스템 [P0]
 
-- [ ] **2.2.1** Catcher 클래스 구현
+- [x] **2.2.1** Catcher 클래스 구현
 
   - src/game/entities/Catcher.ts 생성
   - 속성: position, currentShape, currentColor, state
@@ -238,7 +238,7 @@
   - 테스트: Catcher 인스턴스 생성 및 메서드 동작 확인
   - 커밋: `feat(entity): create catcher entity class`
 
-- [ ] **2.2.2** CatcherController 구현
+- [x] **2.2.2** CatcherController 구현
 
   - src/game/CatcherController.ts 생성
   - 입력을 받아 Catcher 제어
@@ -246,7 +246,7 @@
   - 테스트: 입력에 따라 Catcher가 올바르게 이동하는지 확인
   - 커밋: `feat(game): create catcher controller`
 
-- [ ] **2.2.3** Catcher 렌더링
+- [x] **2.2.3** Catcher 렌더링
 
   - src/components/Game/Catcher.tsx 생성
   - 도형 타입별 캐처 형태 렌더링
@@ -254,7 +254,7 @@
   - 테스트: 각 상태의 Catcher가 정확하게 렌더링되는지 확인
   - 커밋: `feat(render): implement catcher rendering`
 
-- [ ] **2.2.4** Catcher 애니메이션
+- [x] **2.2.4** Catcher 애니메이션
   - 이동 부드러움 (보간)
   - 도형 변경 트랜지션
   - 색상 변경 트랜지션
@@ -302,7 +302,7 @@
 
 #### 2.5 다음 도형 미리보기 [P0]
 
-- [ ] **2.5.1** NextShapePreview 컴포넌트
+- [x] **2.5.1** NextShapePreview 컴포넌트
 
   - src/components/Game/NextShapePreview.tsx 생성
   - 다음 도형 정보 표시
@@ -310,7 +310,7 @@
   - 테스트: 다음 도형이 정확하게 표시되는지 확인
   - 커밋: `feat(ui): create next shape preview component`
 
-- [ ] **2.5.2** ShapeManager와 연동
+- [x] **2.5.2** ShapeManager와 연동
   - nextShape 생성 로직
   - 현재 도형 캐치 시 nextShape → currentShape
   - 테스트: 미리보기와 실제 도형이 일치하는지 확인
@@ -318,7 +318,7 @@
 
 #### 2.6 점수 시스템 [P0]
 
-- [ ] **2.6.1** ScoreCalculator 구현
+- [x] **2.6.1** ScoreCalculator 구현
 
   - src/game/ScoreCalculator.ts 생성
   - 기본 점수 계산
@@ -326,7 +326,7 @@
   - 테스트: 점수 계산이 정확한지 단위 테스트
   - 커밋: `feat(game): implement score calculator`
 
-- [ ] **2.6.2** 점수 상태 관리
+- [x] **2.6.2** 점수 상태 관리
   - gameStore에 score 상태 추가
   - addScore() 액션
   - 테스트: 점수가 정확하게 누적되는지 확인
