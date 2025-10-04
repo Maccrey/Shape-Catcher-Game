@@ -607,14 +607,14 @@
   - 테스트: 다이아몬드 매칭이 정확한지 확인
   - 커밋: `feat(game): add diamond matching logic`
 
-- [ ] **5.1.5** 레인보우 매칭 로직
+- [x] **5.1.5** 레인보우 매칭 로직
 
   - 도형만 맞으면 성공
   - 1.5배 점수 배율
   - 테스트: 레인보우 매칭이 정확한지 확인
   - 커밋: `feat(game): add rainbow matching logic`
 
-- [ ] **5.1.6** 골든 스타 매칭 로직
+- [x] **5.1.6** 골든 스타 매칭 로직
 
   - 정확히 일치해야 성공
   - 3배 점수 배율
@@ -622,7 +622,7 @@
   - 테스트: 골든 스타 매칭과 파워업 드롭 확인
   - 커밋: `feat(game): add golden star matching with powerup drop`
 
-- [ ] **5.1.7** 폭탄 충돌 처리
+- [x] **5.1.7** 폭탄 충돌 처리
 
   - 충돌 시 -5점
   - 캐처 1초 스턴
@@ -630,13 +630,13 @@
   - 테스트: 폭탄 충돌이 정확하게 처리되는지 확인
   - 커밋: `feat(game): implement bomb collision penalty`
 
-- [ ] **5.1.8** 타임 보너스 처리
+- [x] **5.1.8** 타임 보너스 처리
 
   - 시간 +3초 추가
   - 테스트: 시간이 정확하게 추가되는지 확인
   - 커밋: `feat(game): add time bonus mechanic`
 
-- [ ] **5.1.9** 멀티플라이어 처리
+- [x] **5.1.9** 멀티플라이어 처리
   - 10초간 모든 점수 2배
   - 테스트: 멀티플라이어 효과 확인
   - 커밋: `feat(game): add multiplier powerup`
@@ -689,28 +689,28 @@
 
 #### 5.3 등급 시스템 [P1]
 
-- [ ] **5.3.1** Grade enum 정의
+- [x] **5.3.1** Grade enum 정의
 
   - Bronze, Silver, Gold, Diamond, Master
   - types/game.types.ts에 추가
   - 테스트: 타입 정의 확인
   - 커밋: `feat(types): add grade types`
 
-- [ ] **5.3.2** 등급 판정 로직
+- [x] **5.3.2** 등급 판정 로직
 
   - LevelManager에 calculateGrade() 메서드
   - 조건별 등급 판정
   - 테스트: 각 조건에 맞는 등급이 부여되는지 확인
   - 커밋: `feat(game): implement grade calculation`
 
-- [ ] **5.3.3** 등급별 보상
+- [x] **5.3.3** 등급별 보상
 
   - 보너스 점수 지급
   - 파워업 지급
   - 테스트: 보상이 정확하게 지급되는지 확인
   - 커밋: `feat(game): add grade-based rewards`
 
-- [ ] **5.3.4** LevelTransition에 등급 표시
+- [x] **5.3.4** LevelTransition에 등급 표시
   - 등급 아이콘 표시
   - 애니메이션 효과
   - 테스트: 등급이 정확하게 표시되는지 확인
@@ -768,7 +768,7 @@
 
 #### 6.2 화면 효과 [P1]
 
-- [ ] **6.2.1** CameraController 클래스
+- [x] **6.2.1** CameraController 클래스
 
   - src/core/CameraController.ts 생성
   - shake() 메서드
@@ -776,14 +776,14 @@
   - 테스트: 카메라 쉐이크가 동작하는지 확인
   - 커밋: `feat(core): create camera controller with shake effect`
 
-- [ ] **6.2.2** 카메라 쉐이크 구현
+- [x] **6.2.2** 카메라 쉐이크 구현
 
   - 폭탄 충돌 시 0.3초간 5px 진폭
   - 감쇠 효과
   - 테스트: 쉐이크가 자연스럽게 동작하는지 확인
   - 커밋: `feat(effect): implement camera shake on bomb collision`
 
-- [ ] **6.2.3** 슬로우 모션 효과
+- [x] **6.2.3** 슬로우 모션 효과
 
   - 15+ 콤보 시 0.5x 속도
   - 시간 스케일 조정
@@ -791,7 +791,7 @@
   - 테스트: 슬로우 모션이 정확하게 적용되는지 확인
   - 커밋: `feat(effect): add slow motion effect for high combos`
 
-- [ ] **6.2.4** 화면 테두리 빛남 효과
+- [x] **6.2.4** 화면 테두리 빛남 효과
 
   - 10+ 콤보 시 테두리 강조
   - 맥동 애니메이션
@@ -799,7 +799,7 @@
   - 테스트: 테두리 효과가 표시되는지 확인
   - 커밋: `feat(effect): add screen border glow effect`
 
-- [ ] **6.2.5** 배경 동적 변화
+- [x] **6.2.5** 배경 동적 변화
   - 콤보에 따라 배경 색상 강조
   - 부드러운 트랜지션
   - 테스트: 배경 변화가 자연스러운지 확인
