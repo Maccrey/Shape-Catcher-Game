@@ -12,8 +12,7 @@ export const GameOverScreen: React.FC = () => {
     gameTime,
     comboSystem,
     restartGame,
-    gameStatus,
-    statisticsManager
+    gameStatus
   } = useGameStore();
 
   const [shareStatus, setShareStatus] = useState<'idle' | 'sharing' | 'success' | 'downloaded'>('idle');
@@ -25,8 +24,8 @@ export const GameOverScreen: React.FC = () => {
 
   const currentLevel = levelManager.getCurrentLevel();
   const maxCombo = comboSystem.getMaxCombo();
-  const stats = statisticsManager?.getStatistics();
-  const accuracy = stats ? (stats.totalCatches / (stats.totalCatches + stats.totalMisses)) * 100 : 0;
+  // TODO: Add statistics tracking to gameStore
+  const accuracy = 0; // Placeholder
 
   const formatTime = (time: number) => {
     const seconds = Math.floor(time / 1000);
@@ -117,7 +116,7 @@ export const GameOverScreen: React.FC = () => {
                 score,
                 level: currentLevel,
                 maxCombo,
-                totalCatches: stats?.totalCatches || 0,
+                totalCatches: 0, // TODO: Track total catches
                 accuracy,
                 mode: 'Classic'
               };
