@@ -2,6 +2,7 @@ import { GameLoop } from './GameLoop';
 import { PhysicsEngine } from './PhysicsEngine';
 import { InputManager, InputAction } from './InputManager';
 import { CollisionDetector } from './CollisionDetector';
+import { ParticleSystem } from './ParticleSystem';
 import { ShapeFactory } from '../game/factories/ShapeFactory';
 import { useGameStore } from '../store/gameStore';
 import { GameStatus } from '../types/game.types';
@@ -14,6 +15,7 @@ export class GameEngine {
   private gameLoop: GameLoop;
   private physicsEngine: PhysicsEngine;
   private inputManager: InputManager;
+  private particleSystem: ParticleSystem;
   private doubleBuffer: DoubleBuffer | null = null;
   private mainCanvas: HTMLCanvasElement | null = null;
   private mainCtx: CanvasRenderingContext2D | null = null;
@@ -25,6 +27,7 @@ export class GameEngine {
     this.gameLoop = new GameLoop();
     this.physicsEngine = new PhysicsEngine();
     this.inputManager = InputManager.getInstance();
+    this.particleSystem = new ParticleSystem();
 
     this.setupInputHandlers();
     this.gameLoop.setUpdateCallback(this.update.bind(this));
@@ -103,8 +106,11 @@ export class GameEngine {
     gameState.updateGameTime(deltaTime);
     gameState.updateLevelTime(deltaTime);
 
-    // Update combo timer
-    gameState.updateComboTimer(deltaTime * 1000);
+    // Update combo system
+    gameState.updateCombo(deltaTime);
+
+    // Update particle system
+    this.particleSystem.update(deltaTime);
 
     // Update catcher
     gameState.catcher.update(deltaTime);
@@ -164,6 +170,9 @@ export class GameEngine {
         gameState.catcher.currentColor
       );
 
+      // Draw particles
+      this.particleSystem.render(ctx);
+
       // Draw UI
       this.drawUI(ctx, gameState);
     } else {
@@ -176,13 +185,59 @@ export class GameEngine {
   };
 
   private updateShapeSpawning(deltaTime: number): void {
+    const gameState = useGameStore.getState();
+    const levelConfig = gameState.levelManager.getCurrentLevelConfig();
+
     const now = Date.now();
-    if (now - this.lastShapeSpawn > this.shapeSpawnInterval) {
-      const gameState = useGameStore.getState();
-      const newShape = ShapeFactory.createRandomShape(
-        gameState.availableShapes,
-        gameState.availableColors
-      );
+    if (now - this.lastShapeSpawn > levelConfig.spawnInterval) {
+      // Determine if special shape should spawn
+      const shouldSpawnSpecial = Math.random() < levelConfig.specialShapeChance;
+      const shouldSpawnBomb = Math.random() < levelConfig.bombChance;
+
+      let newShape;
+      if (shouldSpawnBomb) {
+        // Spawn bomb
+        newShape = ShapeFactory.createBomb();
+      } else if (shouldSpawnSpecial) {
+        // Random special shape
+        const specialTypes = ['diamond', 'rainbow', 'golden_star', 'time_bonus', 'multiplier'];
+        const randomSpecial = specialTypes[Math.floor(Math.random() * specialTypes.length)];
+
+        switch (randomSpecial) {
+          case 'diamond':
+            newShape = ShapeFactory.createDiamond(
+              gameState.availableColors[Math.floor(Math.random() * gameState.availableColors.length)]
+            );
+            break;
+          case 'rainbow':
+            newShape = ShapeFactory.createRainbow(
+              gameState.availableShapes[Math.floor(Math.random() * gameState.availableShapes.length)]
+            );
+            break;
+          case 'golden_star':
+            newShape = ShapeFactory.createGoldenStar();
+            break;
+          case 'time_bonus':
+            newShape = ShapeFactory.createTimeBonus();
+            break;
+          case 'multiplier':
+            newShape = ShapeFactory.createMultiplier();
+            break;
+          default:
+            newShape = ShapeFactory.createDiamond(
+              gameState.availableColors[Math.floor(Math.random() * gameState.availableColors.length)]
+            );
+        }
+      } else {
+        newShape = ShapeFactory.createRandomShape(
+          gameState.availableShapes,
+          gameState.availableColors
+        );
+      }
+
+      // Set fall speed based on level
+      newShape.setFallSpeed(levelConfig.fallSpeed);
+
       gameState.addShape(newShape);
       this.lastShapeSpawn = now;
     }
@@ -196,16 +251,59 @@ export class GameEngine {
       const collision = CollisionDetector.checkCollision(shape, catcher);
 
       if (collision.hasCollision) {
+        const specialType = shape.getSpecialType();
+
         if (collision.isMatch) {
           // Success
           const points = 10 * CollisionDetector.calculateScoreMultiplier(shape);
           gameState.addScore(points);
           gameState.incrementCatch();
           gameState.incrementCombo();
+
+          // Special shape effects
+          if (specialType) {
+            switch (specialType) {
+              case 'golden_star':
+                // TODO: Add powerup to inventory
+                this.particleSystem.emitSparkle(shape.position, '#ffd700');
+                break;
+              case 'time_bonus':
+                // TODO: Add time bonus
+                this.particleSystem.emitSparkle(shape.position, '#74b9ff');
+                break;
+              case 'multiplier':
+                // TODO: Activate multiplier
+                this.particleSystem.emitSparkle(shape.position, '#a29bfe');
+                break;
+              default:
+                this.particleSystem.emitSparkle(shape.position);
+            }
+          } else {
+            // Regular success particles
+            this.particleSystem.emitSuccess(shape.position);
+          }
+
+          // Emit combo particles if combo is high
+          const combo = gameState.comboSystem.getCount();
+          if (combo >= 5) {
+            const tier = gameState.comboSystem.getCurrentTierIndex();
+            this.particleSystem.emitCombo(shape.position, tier);
+          }
         } else {
-          // Miss
-          gameState.decrementLives();
-          gameState.resetCombo();
+          // Handle bomb collision
+          if (specialType === 'bomb') {
+            // Bomb always triggers
+            gameState.addScore(-5); // Negative points
+            gameState.decrementLives();
+            gameState.resetCombo();
+            // TODO: Add stun effect to catcher
+            this.particleSystem.emitExplosion(shape.position, '#ef4444');
+          } else {
+            // Regular miss
+            gameState.decrementLives();
+            gameState.resetCombo();
+            this.particleSystem.emitExplosion(shape.position);
+          }
         }
 
         // Remove the shape
@@ -223,18 +321,50 @@ export class GameEngine {
     ctx.fillText(`Score: ${gameState.score}`, 20, 30);
 
     // Level
-    ctx.fillText(`Level: ${gameState.currentLevel}`, 20, 60);
+    ctx.fillText(`Level: ${gameState.levelManager.getCurrentLevel()}`, 20, 60);
 
     // Lives
     ctx.fillText(`Lives: ${gameState.lives}`, 20, 90);
 
     // Progress
-    ctx.fillText(`Progress: ${gameState.catchCount}/${gameState.targetCatches}`, 20, 120);
+    const levelConfig = gameState.levelManager.getCurrentLevelConfig();
+    const progress = Math.floor(gameState.levelTime / 1000); // Convert to seconds as proxy for progress
+    ctx.fillText(`Progress: ${progress}/${levelConfig.targetCatches}`, 20, 120);
 
     // Combo
-    if (gameState.combo > 0) {
-      ctx.fillStyle = '#fbbf24';
-      ctx.fillText(`Combo: ${gameState.combo}x`, 20, 150);
+    const combo = gameState.comboSystem.getCount();
+    if (combo > 0) {
+      const tier = gameState.comboSystem.getCurrentTier();
+      ctx.fillStyle = tier ? tier.color : '#fbbf24';
+      ctx.fillText(`Combo: ${combo}x`, 20, 150);
+
+      // Combo timer bar
+      const timerPercent = gameState.comboSystem.getTimerPercent();
+      const barWidth = 100;
+      const barHeight = 8;
+      const barX = 20;
+      const barY = 160;
+
+      // Background
+      ctx.fillStyle = '#374151';
+      ctx.fillRect(barX, barY, barWidth, barHeight);
+
+      // Timer bar
+      ctx.fillStyle = tier ? tier.color : '#fbbf24';
+      ctx.fillRect(barX, barY, barWidth * timerPercent, barHeight);
+
+      // Border
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 1;
+      ctx.strokeRect(barX, barY, barWidth, barHeight);
+    }
+
+    // Combo message
+    if (gameState.showComboMessage) {
+      ctx.fillStyle = gameState.comboSystem.getComboColor();
+      ctx.font = 'bold 32px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText(gameState.comboMessage, ctx.canvas.width / 2, ctx.canvas.height / 2 - 100);
     }
 
     // Current catcher info

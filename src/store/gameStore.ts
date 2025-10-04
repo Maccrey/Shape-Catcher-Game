@@ -3,6 +3,8 @@ import { GameStatus, GameMode, DifficultyLevel } from '../types/game.types';
 import { ShapeType, ShapeColor } from '../types/shape.types';
 import { Shape } from '../game/entities/Shape';
 import { Catcher } from '../game/entities/Catcher';
+import { ComboSystem } from '../game/ComboSystem';
+import { LevelManager } from '../game/LevelManager';
 import { INITIAL_LIVES } from '../config/constants';
 
 export interface GameState {
@@ -13,16 +15,14 @@ export interface GameState {
   isPaused: boolean;
 
   // Level and progress
-  currentLevel: number;
+  levelManager: LevelManager;
   score: number;
   lives: number;
-  catchCount: number;
-  targetCatches: number;
 
   // Combo system
-  combo: number;
-  maxCombo: number;
-  comboTimer: number;
+  comboSystem: ComboSystem;
+  comboMessage: string;
+  showComboMessage: boolean;
 
   // Entities
   shapes: Shape[];
@@ -50,12 +50,14 @@ export interface GameActions {
   addScore: (points: number) => void;
   incrementCatch: () => void;
   decrementLives: () => void;
-  nextLevel: () => void;
+  completeLevel: () => void;
+  proceedToNextLevel: () => void;
 
   // Combo system
   incrementCombo: () => void;
   resetCombo: () => void;
-  updateComboTimer: (time: number) => void;
+  updateCombo: (deltaTime: number) => void;
+  showCombo: (message: string, duration?: number) => void;
 
   // Shapes
   addShape: (shape: Shape) => void;
@@ -86,6 +88,8 @@ export interface GameActions {
 }
 
 const initialCatcher = new Catcher();
+const initialComboSystem = new ComboSystem();
+const initialLevelManager = new LevelManager();
 
 const initialState: GameState = {
   gameStatus: GameStatus.MENU,
@@ -93,15 +97,13 @@ const initialState: GameState = {
   difficulty: DifficultyLevel.NORMAL,
   isPaused: false,
 
-  currentLevel: 1,
+  levelManager: initialLevelManager,
   score: 0,
   lives: INITIAL_LIVES,
-  catchCount: 0,
-  targetCatches: 20,
 
-  combo: 0,
-  maxCombo: 0,
-  comboTimer: 0,
+  comboSystem: initialComboSystem,
+  comboMessage: '',
+  showComboMessage: false,
 
   shapes: [],
   catcher: initialCatcher,
@@ -118,19 +120,35 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
   ...initialState,
 
   // Game control
-  startGame: () => set({
-    gameStatus: GameStatus.PLAYING,
-    score: 0,
-    lives: INITIAL_LIVES,
-    currentLevel: 1,
-    catchCount: 0,
-    combo: 0,
-    maxCombo: 0,
-    gameTime: 0,
-    levelTime: 0,
-    shapes: [],
-    catcher: new Catcher()
-  }),
+  startGame: () => {
+    const newComboSystem = new ComboSystem();
+    const newLevelManager = new LevelManager();
+    const newCatcher = new Catcher();
+
+    // Update available shapes and colors based on level
+    const levelConfig = newLevelManager.getCurrentLevelConfig();
+    const shapes = Object.values(ShapeType).slice(0, levelConfig.shapeTypeCount);
+    const colors = Object.values(ShapeColor).slice(0, levelConfig.colorCount);
+
+    newCatcher.setAvailableShapes(shapes);
+    newCatcher.setAvailableColors(colors);
+
+    set({
+      gameStatus: GameStatus.PLAYING,
+      score: 0,
+      lives: INITIAL_LIVES,
+      levelManager: newLevelManager,
+      comboSystem: newComboSystem,
+      comboMessage: '',
+      showComboMessage: false,
+      gameTime: 0,
+      levelTime: 0,
+      shapes: [],
+      catcher: newCatcher,
+      availableShapes: shapes,
+      availableColors: colors
+    });
+  },
 
   pauseGame: () => set({ isPaused: true }),
   resumeGame: () => set({ isPaused: false }),
@@ -149,19 +167,16 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
 
   // Score and progress
   addScore: (points: number) => {
-    const { score, combo } = get();
-    const comboMultiplier = Math.floor(combo / 5) * 0.1 + 1; // 10% bonus per 5 combo
-    const finalPoints = Math.floor(points * comboMultiplier);
+    const { score, comboSystem } = get();
+    const finalPoints = comboSystem.calculateBonusScore(points);
     set({ score: score + finalPoints });
   },
 
   incrementCatch: () => {
-    const { catchCount, targetCatches } = get();
-    const newCatchCount = catchCount + 1;
-    set({ catchCount: newCatchCount });
-
-    if (newCatchCount >= targetCatches) {
-      set({ gameStatus: GameStatus.LEVEL_TRANSITION });
+    // Simple level completion after 30 seconds for now
+    const { levelTime } = get();
+    if (levelTime > 30000) { // 30 seconds
+      get().completeLevel();
     }
   },
 
@@ -175,37 +190,63 @@ export const useGameStore = create<GameState & GameActions>((set, get) => ({
     }
   },
 
-  nextLevel: () => {
-    const { currentLevel } = get();
+  completeLevel: () => {
+    set({ gameStatus: GameStatus.LEVEL_TRANSITION });
+  },
+
+  proceedToNextLevel: () => {
+    const { levelManager, catcher } = get();
+    levelManager.nextLevel();
+
+    // Update available shapes and colors based on new level
+    const levelConfig = levelManager.getCurrentLevelConfig();
+    const shapes = Object.values(ShapeType).slice(0, levelConfig.shapeTypeCount);
+    const colors = Object.values(ShapeColor).slice(0, levelConfig.colorCount);
+
+    catcher.setAvailableShapes(shapes);
+    catcher.setAvailableColors(colors);
+
     set({
-      currentLevel: currentLevel + 1,
-      catchCount: 0,
+      levelManager,
+      catcher,
       levelTime: 0,
-      gameStatus: GameStatus.PLAYING
+      gameStatus: GameStatus.PLAYING,
+      shapes: [], // Clear existing shapes
+      availableShapes: shapes,
+      availableColors: colors
     });
   },
 
   // Combo system
   incrementCombo: () => {
-    const { combo, maxCombo } = get();
-    const newCombo = combo + 1;
-    set({
-      combo: newCombo,
-      maxCombo: Math.max(maxCombo, newCombo),
-      comboTimer: 3000 // Reset to 3 seconds
+    const { comboSystem } = get();
+    comboSystem.increment();
+
+    // Setup callbacks for combo system
+    comboSystem.setOnTierReached((tier) => {
+      get().showCombo(tier.message, 2000);
     });
+
+    set({ comboSystem });
   },
 
-  resetCombo: () => set({ combo: 0, comboTimer: 0 }),
+  resetCombo: () => {
+    const { comboSystem } = get();
+    comboSystem.reset();
+    set({ comboSystem });
+  },
 
-  updateComboTimer: (time: number) => {
-    const { comboTimer } = get();
-    const newTimer = Math.max(0, comboTimer - time);
-    set({ comboTimer: newTimer });
+  updateCombo: (deltaTime: number) => {
+    const { comboSystem } = get();
+    comboSystem.update(deltaTime);
+    set({ comboSystem });
+  },
 
-    if (newTimer <= 0 && comboTimer > 0) {
-      set({ combo: 0 });
-    }
+  showCombo: (message: string, duration: number = 1500) => {
+    set({ comboMessage: message, showComboMessage: true });
+    setTimeout(() => {
+      set({ showComboMessage: false });
+    }, duration);
   },
 
   // Shapes

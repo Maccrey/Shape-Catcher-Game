@@ -1,11 +1,18 @@
-import { useRef } from 'react';
+import { useRef, useEffect } from 'react';
 import { Canvas } from './components/Game/Canvas';
 import { useGameStore } from './store/gameStore';
 import { GameStatus } from './types/game.types';
 
 function App() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const { gameStatus, startGame, restartGame, score } = useGameStore();
+  const {
+    gameStatus,
+    startGame,
+    restartGame,
+    proceedToNextLevel,
+    score,
+    levelManager
+  } = useGameStore();
 
   const handleStartGame = () => {
     const canvas = document.querySelector('canvas');
@@ -27,6 +34,21 @@ function App() {
       gameEngine.start();
     }
   };
+
+  const handleNextLevel = () => {
+    proceedToNextLevel();
+  };
+
+  // Auto-proceed to next level after 3 seconds
+  useEffect(() => {
+    if (gameStatus === GameStatus.LEVEL_TRANSITION) {
+      const timer = setTimeout(() => {
+        handleNextLevel();
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [gameStatus]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center">
@@ -54,6 +76,22 @@ function App() {
                 className="bg-white text-blue-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
               >
                 Play Again
+              </button>
+            </>
+          )}
+
+          {gameStatus === GameStatus.LEVEL_TRANSITION && (
+            <>
+              <div className="text-white mb-4">
+                <p className="text-2xl">Level {levelManager.getCurrentLevel() - 1} Complete!</p>
+                <p className="text-lg">Level {levelManager.getCurrentLevel()} starting soon...</p>
+                <p>Score: {score}</p>
+              </div>
+              <button
+                onClick={handleNextLevel}
+                className="bg-white text-blue-500 px-6 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors"
+              >
+                Continue
               </button>
             </>
           )}
