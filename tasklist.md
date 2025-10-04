@@ -1414,28 +1414,28 @@
 
 #### 11.4 배경 테마 [P2]
 
-- [ ] **11.4.1** Theme 타입 정의
+- [x] **11.4.1** Theme 타입 정의
 
   - src/types/theme.types.ts 생성
   - Theme 인터페이스 (id, name, colors, animation)
   - 테스트: 타입 정의 확인
   - 커밋: `feat(types): define background theme types`
 
-- [ ] **11.4.2** 배경 테마 6종 구현
+- [x] **11.4.2** 배경 테마 6종 구현
 
   - 각 레벨 범위별 테마
   - 테마별 고유한 색상과 애니메이션
   - 테스트: 각 테마가 정확하게 렌더링되는지 확인
   - 커밋: `feat(theme): implement 6 background themes`
 
-- [ ] **11.4.3** 테마 선택 UI
+- [x] **11.4.3** 테마 선택 UI
 
   - Settings에 테마 선택 추가
   - 테마 미리보기
   - 테스트: 테마 선택이 정상 동작하는지 확인
   - 커밋: `feat(ui): add theme selection interface`
 
-- [ ] **11.4.4** 테마 언락 시스템
+- [x] **11.4.4** 테마 언락 시스템
   - 해당 레벨 클리어 시 테마 언락
   - persistStore에 unlockedThemes 저장
   - 테스트: 테마 언락이 정상 동작하는지 확인
