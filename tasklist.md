@@ -1144,7 +1144,7 @@
   - 테스트: 업적 알림이 표시되는지 확인
   - 커밋: `feat(ui): add achievement unlock notification`
 
-- [ ] **9.1.6** Achievements 컴포넌트
+- [x] **9.1.6** Achievements 컴포넌트
   - src/components/Menu/Achievements.tsx 생성
   - 모든 업적 목록 표시
   - 달성/미달성 상태 표시
@@ -1153,21 +1153,21 @@
 
 #### 9.2 통계 추적 [P2]
 
-- [ ] **9.2.1** 통계 데이터 구조
+- [x] **9.2.1** 통계 데이터 구조
 
   - persistStore에 stats 섹션 추가
   - totalCatches, totalMisses, bestCombo 등
   - 테스트: 통계 데이터 확인
   - 커밋: `feat(store): add statistics tracking`
 
-- [ ] **9.2.2** 통계 업데이트
+- [x] **9.2.2** 통계 업데이트
 
   - 게임 진행 중 실시간 통계 업데이트
   - 각 액션 후 자동 저장
   - 테스트: 통계가 정확하게 업데이트되는지 확인
   - 커밋: `feat(game): implement real-time statistics update`
 
-- [ ] **9.2.3** 통계 화면
+- [x] **9.2.3** 통계 화면
   - GameOverScreen에 통계 섹션 추가
   - 총 플레이 시간, 캐치율 등 표시
   - 테스트: 통계가 정확하게 표시되는지 확인
@@ -1175,7 +1175,7 @@
 
 #### 9.3 영구 데이터 저장 [P2]
 
-- [ ] **9.3.1** StorageService 클래스
+- [x] **9.3.1** StorageService 클래스
 
   - src/services/StorageService.ts 생성
   - 메모리 기반 저장소 (Map 사용)
@@ -1183,7 +1183,7 @@
   - 테스트: 데이터 저장 및 로드 확인
   - 커밋: `feat(storage): create memory-based storage service`
 
-- [ ] **9.3.2** persistStore 연동
+- [x] **9.3.2** persistStore 연동
 
   - StorageService를 사용하여 데이터 영구화
   - 게임 시작 시 로드
@@ -1191,7 +1191,7 @@
   - 테스트: 페이지 새로고침 후 데이터 유지 확인
   - 커밋: `feat(store): integrate storage service with persist store`
 
-- [ ] **9.3.3** 데이터 마이그레이션
+- [x] **9.3.3** 데이터 마이그레이션
   - 버전 관리
   - 구 버전 데이터 호환성
   - 테스트: 다양한 버전의 데이터 로드 확인
@@ -1199,7 +1199,7 @@
 
 #### 9.4 설정 메뉴 [P2]
 
-- [ ] **9.4.1** Settings 컴포넌트
+- [x] **9.4.1** Settings 컴포넌트
 
   - src/components/Menu/Settings.tsx 생성
   - 음악 볼륨 슬라이더
@@ -1208,14 +1208,14 @@
   - 테스트: 설정 메뉴가 표시되는지 확인
   - 커밋: `feat(ui): create settings menu component`
 
-- [ ] **9.4.2** 설정 상태 관리
+- [x] **9.4.2** 설정 상태 관리
 
   - settingsStore 생성
   - 설정 변경 시 즉시 적용
   - 테스트: 설정이 정확하게 적용되는지 확인
   - 커밋: `feat(store): create settings store`
 
-- [ ] **9.4.3** 설정 영구 저장
+- [x] **9.4.3** 설정 영구 저장
 
   - persistStore에 settings 추가
   - 게임 재시작 시 설정 유지
