@@ -1,3 +1,10 @@
+export interface LevelTheme {
+  background: string;
+  bgAnimation: string;
+  music: string;
+  particleColor: string;
+}
+
 export interface LevelConfig {
   level: number;
   fallSpeed: number;
@@ -7,12 +14,7 @@ export interface LevelConfig {
   specialShapeChance: number;
   bombChance: number;
   targetCatches: number;
-  theme: {
-    background: string;
-    bgAnimation: string;
-    music: string;
-    particleColor: string;
-  };
+  theme: LevelTheme;
 }
 
 export interface LevelProgress {

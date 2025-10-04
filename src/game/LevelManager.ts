@@ -49,6 +49,13 @@ export class LevelManager {
     return catchCount >= this.currentConfig.targetCatches;
   }
 
+  public getLevelProgress(catchCount: number = 0): { catches: number; target: number } {
+    return {
+      catches: catchCount,
+      target: this.currentConfig.targetCatches
+    };
+  }
+
   public calculateGrade(
     score: number,
     catchCount: number,
@@ -134,7 +141,7 @@ export class LevelManager {
     return this.currentConfig.targetCatches;
   }
 
-  public getLevelProgress(catchCount: number): number {
+  public getLevelProgressPercent(catchCount: number): number {
     return Math.min(1.0, catchCount / this.currentConfig.targetCatches);
   }
 

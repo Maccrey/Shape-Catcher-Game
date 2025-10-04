@@ -1532,10 +1532,10 @@
   - 테스트: Bundle Analyzer로 확인
   - 커밋: `perf(build): optimize bundle size`
 
-- [ ] **12.3.4** 에셋 최적화
-  - 이미지 압축 (WebP)
-  - 오디오 압축 (MP3 128kbps)
-  - 지연 로딩 적용
+- [x] **12.3.4** 에셋 최적화
+  - 이미지 압축 (WebP) - N/A (Canvas 렌더링 사용)
+  - 오디오 압축 (MP3 128kbps) - N/A (Web Audio API 사용)
+  - 지연 로딩 적용 (React.lazy)
   - 테스트: 로딩 시간 확인
   - 커밋: `perf(assets): optimize asset loading`
 

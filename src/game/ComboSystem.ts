@@ -105,6 +105,10 @@ export class ComboSystem {
     return this.state.maxCount;
   }
 
+  public getMaxCombo(): number {
+    return this.getMaxCount();
+  }
+
   public getMultiplier(): number {
     return this.state.multiplier;
   }
