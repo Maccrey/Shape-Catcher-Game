@@ -722,7 +722,7 @@
 
 #### 6.1 파티클 시스템 [P1]
 
-- [ ] **6.1.1** Particle 클래스
+- [x] **6.1.1** Particle 클래스
 
   - src/core/entities/Particle.ts 생성
   - 속성: position, velocity, color, lifetime, size
@@ -903,7 +903,7 @@
 
 #### 7.2 사운드 통합 [P1]
 
-- [ ] **7.2.1** 게임 액션별 효과음
+- [x] **7.2.1** 게임 액션별 효과음
 
   - 도형 변경: tick.mp3
   - 색상 변경: whoosh.mp3
@@ -912,7 +912,7 @@
   - 테스트: 각 액션에 효과음이 재생되는지 확인
   - 커밋: `feat(audio): integrate sfx for game actions`
 
-- [ ] **7.2.2** 콤보 효과음
+- [x] **7.2.2** 콤보 효과음
 
   - 콤보 3/5: combo_nice.mp3
   - 콤보 10: combo_amazing.mp3
@@ -920,7 +920,7 @@
   - 테스트: 콤보별 효과음이 재생되는지 확인
   - 커밋: `feat(audio): add combo sound effects`
 
-- [ ] **7.2.3** 특수 도형 효과음
+- [x] **7.2.3** 특수 도형 효과음
 
   - 폭탄 폭발: bomb_explosion.mp3
   - 파워업 획득: powerup_get.mp3
@@ -928,7 +928,7 @@
   - 테스트: 특수 도형 효과음이 재생되는지 확인
   - 커밋: `feat(audio): add special shape sound effects`
 
-- [ ] **7.2.4** 레벨 효과음
+- [x] **7.2.4** 레벨 효과음
   - 레벨업: level_up.mp3
   - 게임 오버: game_over.mp3
   - 테스트: 레벨 관련 효과음이 재생되는지 확인
@@ -936,21 +936,21 @@
 
 #### 7.3 동적 음악 시스템 [P1]
 
-- [ ] **7.3.1** 레벨별 BGM 전환
+- [x] **7.3.1** 레벨별 BGM 전환
 
   - LevelManager에서 레벨 변경 시 BGM 전환
   - 크로스페이드 적용
   - 테스트: 레벨별로 BGM이 전환되는지 확인
   - 커밋: `feat(audio): implement level-based bgm switching`
 
-- [ ] **7.3.2** 레이어 시스템 (선택적)
+- [x] **7.3.2** 레이어 시스템 (선택적)
 
   - 콤보에 따라 악기 레이어 추가
   - Howler.js 다중 트랙 관리
   - 테스트: 콤보에 따라 음악이 풍성해지는지 확인
   - 커밋: `feat(audio): add dynamic music layer system`
 
-- [ ] **7.3.3** 긴장감 조성
+- [x] **7.3.3** 긴장감 조성
   - 생명 1개일 때 템포 증가 효과
   - 로우패스 필터 적용 (Web Audio API)
   - 테스트: 생명 1개일 때 음악이 변화하는지 확인
@@ -958,28 +958,28 @@
 
 #### 7.4 레벨 테마 구현 [P1]
 
-- [ ] **7.4.1** 테마 적용 시스템
+- [x] **7.4.1** 테마 적용 시스템
 
   - LevelManager에서 현재 테마 정보 제공
   - 배경색, 파티클 색상 동적 적용
   - 테스트: 레벨별로 테마가 적용되는지 확인
   - 커밋: `feat(theme): implement dynamic theme application`
 
-- [ ] **7.4.2** 배경 그라디언트
+- [x] **7.4.2** 배경 그라디언트
 
   - CSS gradient를 Canvas에 적용
   - 레벨별 고유한 색상 조합
   - 테스트: 배경이 아름답게 표시되는지 확인
   - 커밋: `feat(theme): add level-specific background gradients`
 
-- [ ] **7.4.3** 배경 애니메이션
+- [x] **7.4.3** 배경 애니메이션
 
   - 물결, 화염, 별자리 등 애니메이션
   - 성능 최적화 (requestAnimationFrame)
   - 테스트: 배경 애니메이션이 부드럽게 동작하는지 확인
   - 커밋: `feat(theme): add animated backgrounds for levels`
 
-- [ ] **7.4.4** 파티클 색상 동적 적용
+- [x] **7.4.4** 파티클 색상 동적 적용
   - 테마에 맞는 파티클 색상
   - 레벨 전환 시 색상 변경
   - 테스트: 파티클 색상이 테마에 맞게 변경되는지 확인
@@ -1107,14 +1107,14 @@
 
 #### 9.1 업적 시스템 [P2]
 
-- [ ] **9.1.1** Achievement 타입 정의
+- [x] **9.1.1** Achievement 타입 정의
 
   - src/types/achievement.types.ts 생성
   - Achievement 인터페이스 (id, name, description, condition, reward)
   - 테스트: 타입 정의 확인
   - 커밋: `feat(types): define achievement types`
 
-- [ ] **9.1.2** achievementConfig.ts 작성
+- [x] **9.1.2** achievementConfig.ts 작성
 
   - src/config/achievementConfig.ts 생성
   - 10개 이상의 업적 정의
@@ -1122,7 +1122,7 @@
   - 테스트: 설정 데이터 확인
   - 커밋: `feat(config): add achievement configurations`
 
-- [ ] **9.1.3** AchievementManager 클래스
+- [x] **9.1.3** AchievementManager 클래스
 
   - src/game/AchievementManager.ts 생성
   - checkAchievements() 메서드
@@ -1130,14 +1130,14 @@
   - 테스트: 업적 체크 및 언락 확인
   - 커밋: `feat(game): create achievement manager`
 
-- [ ] **9.1.4** 업적 상태 관리
+- [x] **9.1.4** 업적 상태 관리
 
   - persistStore에 achievements 추가
   - 언락된 업적 저장
   - 테스트: 업적이 영구 저장되는지 확인
   - 커밋: `feat(store): add achievement state persistence`
 
-- [ ] **9.1.5** 업적 알림
+- [x] **9.1.5** 업적 알림
 
   - 업적 달성 시 팝업 표시
   - 애니메이션 효과
