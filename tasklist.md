@@ -1449,7 +1449,7 @@
 
 #### 12.1 튜토리얼 [P1]
 
-- [ ] **12.1.1** TutorialStep 컴포넌트
+- [x] **12.1.1** TutorialStep 컴포넌트
 
   - src/components/Tutorial/TutorialStep.tsx 생성
   - 단계별 가이드 표시
@@ -1457,7 +1457,7 @@
   - 테스트: 튜토리얼 단계가 표시되는지 확인
   - 커밋: `feat(tutorial): create tutorial step component`
 
-- [ ] **12.1.2** 튜토리얼 단계 정의
+- [x] **12.1.2** 튜토리얼 단계 정의
 
   - 1단계: 캐처 이동
   - 2단계: 도형 변경
@@ -1467,7 +1467,7 @@
   - 테스트: 모든 단계가 정확하게 표시되는지 확인
   - 커밋: `feat(tutorial): define tutorial steps`
 
-- [ ] **12.1.3** TutorialOverlay 컴포넌트
+- [x] **12.1.3** TutorialOverlay 컴포넌트
 
   - src/components/Tutorial/TutorialOverlay.tsx 생성
   - 반투명 오버레이
@@ -1475,7 +1475,7 @@
   - 테스트: 오버레이가 표시되는지 확인
   - 커밋: `feat(tutorial): create tutorial overlay with spotlight`
 
-- [ ] **12.1.4** 튜토리얼 진행 로직
+- [x] **12.1.4** 튜토리얼 진행 로직
 
   - gameStore에 tutorialStep 추가
   - 조건 달성 시 다음 단계
@@ -1483,7 +1483,7 @@
   - 테스트: 튜토리얼이 정상 진행되는지 확인
   - 커밋: `feat(tutorial): implement tutorial progression logic`
 
-- [ ] **12.1.5** 첫 플레이 감지
+- [x] **12.1.5** 첫 플레이 감지
   - persistStore에 hasPlayedBefore 추가
   - 첫 플레이 시 자동으로 튜토리얼 시작
   - 테스트: 첫 플레이 시 튜토리얼이 시작되는지 확인
