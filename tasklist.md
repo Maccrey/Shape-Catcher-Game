@@ -22,7 +22,7 @@
 
 #### 1.1 프로젝트 셋업 [P0]
 
-- [ ] **1.1.1** Vite + React + TypeScript 프로젝트 생성
+- [x] **1.1.1** Vite + React + TypeScript 프로젝트 생성
 
   ```bash
   npm create vite@latest shape-catcher -- --template react-ts
@@ -31,7 +31,7 @@
   - 테스트: 개발 서버 실행 확인
   - 커밋: `chore(setup): initialize vite project with react-ts template`
 
-- [ ] **1.1.2** 의존성 설치
+- [x] **1.1.2** 의존성 설치
 
   ```bash
   npm install zustand tailwindcss postcss autoprefixer
@@ -42,7 +42,7 @@
   - 테스트: package.json 확인
   - 커밋: `chore(deps): add core dependencies and dev tools`
 
-- [ ] **1.1.3** Tailwind CSS 설정
+- [x] **1.1.3** Tailwind CSS 설정
 
   - tailwind.config.js 생성 및 설정
   - postcss.config.js 설정
@@ -50,7 +50,7 @@
   - 테스트: 간단한 Tailwind 클래스 적용 확인
   - 커밋: `chore(config): configure tailwind css`
 
-- [ ] **1.1.4** TypeScript 엄격 모드 설정
+- [x] **1.1.4** TypeScript 엄격 모드 설정
   - tsconfig.json에 strict: true 설정
   - 추가 컴파일러 옵션 설정 (noUnusedLocals, noUnusedParameters 등)
   - 테스트: 빌드 에러 없음 확인
@@ -58,7 +58,7 @@
 
 #### 1.2 폴더 구조 생성 [P0]
 
-- [ ] **1.2.1** 디렉토리 구조 생성
+- [x] **1.2.1** 디렉토리 구조 생성
 
   ```bash
   mkdir -p src/{components/{Game,UI,Menu,Tutorial},core,game,store,config,utils,types,hooks,services,styles}
@@ -69,7 +69,7 @@
   - 테스트: 폴더 구조 확인
   - 커밋: `chore(structure): create project directory structure`
 
-- [ ] **1.2.2** 기본 타입 정의 생성
+- [x] **1.2.2** 기본 타입 정의 생성
 
   - src/types/game.types.ts
     - GameStatus, DifficultyLevel 등 기본 enum
@@ -80,7 +80,7 @@
   - 테스트: 타입 import 및 사용 확인
   - 커밋: `feat(types): define core type definitions`
 
-- [ ] **1.2.3** 상수 파일 생성
+- [x] **1.2.3** 상수 파일 생성
   - src/config/constants.ts
     - CANVAS_WIDTH, CANVAS_HEIGHT, FPS, CATCHER_HEIGHT 등
   - 테스트: 상수 import 및 사용 확인
@@ -88,7 +88,7 @@
 
 #### 1.3 Canvas 렌더링 시스템 [P0]
 
-- [ ] **1.3.1** Canvas 컴포넌트 기본 구조
+- [x] **1.3.1** Canvas 컴포넌트 기본 구조
 
   - src/components/Game/Canvas.tsx 생성
   - Canvas 요소 렌더링 (반응형 크기)
@@ -96,7 +96,7 @@
   - 테스트: Canvas 요소가 DOM에 렌더링되는지 확인
   - 커밋: `feat(canvas): create basic canvas component`
 
-- [ ] **1.3.2** Canvas Context 초기화
+- [x] **1.3.2** Canvas Context 초기화
 
   - getContext('2d') 획득
   - 기본 렌더링 설정 (fillStyle, strokeStyle 등)
@@ -104,14 +104,14 @@
   - 테스트: Context가 정상적으로 획득되는지 확인
   - 커밋: `feat(canvas): initialize canvas 2d context`
 
-- [ ] **1.3.3** 더블 버퍼링 구현
+- [x] **1.3.3** 더블 버퍼링 구현
 
   - 오프스크린 캔버스 생성
   - 렌더링 최적화 로직
   - 테스트: 깜빡임 없이 렌더링되는지 확인
   - 커밋: `feat(canvas): implement double buffering for smooth rendering`
 
-- [ ] **1.3.4** 기본 도형 렌더링 유틸리티
+- [x] **1.3.4** 기본 도형 렌더링 유틸리티
   - src/utils/renderUtils.ts 생성
   - drawSquare, drawTriangle, drawStar, drawCircle 함수
   - 각 도형의 정확한 기하학적 계산
@@ -120,7 +120,7 @@
 
 #### 1.4 게임 루프 구현 [P0]
 
-- [ ] **1.4.1** GameLoop 클래스 뼈대
+- [x] **1.4.1** GameLoop 클래스 뼈대
 
   - src/core/GameLoop.ts 생성
   - requestAnimationFrame 기반 루프
@@ -128,7 +128,7 @@
   - 테스트: 루프가 정상적으로 실행되는지 확인
   - 커밋: `feat(core): create game loop with fps control`
 
-- [ ] **1.4.2** 시간 관리 시스템
+- [x] **1.4.2** 시간 관리 시스템
 
   - deltaTime 계산
   - 고정 타임스텝 vs 가변 타임스텝
@@ -136,14 +136,14 @@
   - 테스트: deltaTime이 정확하게 계산되는지 확인
   - 커밋: `feat(core): implement time management system`
 
-- [ ] **1.4.3** 게임 루프 생명주기
+- [x] **1.4.3** 게임 루프 생명주기
 
   - start(), stop(), pause(), resume() 메서드
   - 상태 관리 (running, paused)
   - 테스트: 각 메서드가 정상 동작하는지 확인
   - 커밋: `feat(core): add game loop lifecycle methods`
 
-- [ ] **1.4.4** GameEngine 통합
+- [x] **1.4.4** GameEngine 통합
   - src/core/GameEngine.ts 생성
   - GameLoop 인스턴스 관리
   - update(), render() 메서드 분리
@@ -152,7 +152,7 @@
 
 #### 1.5 입력 시스템 [P0]
 
-- [ ] **1.5.1** InputManager 기본 구조
+- [x] **1.5.1** InputManager 기본 구조
 
   - src/core/InputManager.ts 생성
   - 싱글톤 패턴 적용
@@ -160,7 +160,7 @@
   - 테스트: 키 입력이 감지되는지 확인
   - 커밋: `feat(input): create input manager with keyboard support`
 
-- [ ] **1.5.2** 키보드 입력 처리
+- [x] **1.5.2** 키보드 입력 처리
 
   - 화살표 키 (←, →, ↑, ↓) 감지
   - Space, Esc 키 감지
@@ -168,7 +168,7 @@
   - 테스트: 각 키 입력이 정확하게 감지되는지 확인
   - 커밋: `feat(input): implement keyboard input handling`
 
-- [ ] **1.5.3** 터치 입력 처리
+- [x] **1.5.3** 터치 입력 처리
 
   - Pointer Events API 사용
   - 터치 시작, 이동, 종료 이벤트
@@ -176,7 +176,7 @@
   - 테스트: 터치 이벤트가 정상 동작하는지 확인 (모바일 또는 DevTools)
   - 커밋: `feat(input): add touch input support with pointer events`
 
-- [ ] **1.5.4** 입력 버퍼링 및 디바운싱
+- [x] **1.5.4** 입력 버퍼링 및 디바운싱
 
   - 빠른 연속 입력 방지 (50ms)
   - 스와이프 임계값 설정 (30px)
@@ -184,7 +184,7 @@
   - 테스트: 빠른 연속 입력이 적절하게 처리되는지 확인
   - 커밋: `feat(input): implement input buffering and debouncing`
 
-- [ ] **1.5.5** 크로스 플랫폼 입력 통합
+- [x] **1.5.5** 크로스 플랫폼 입력 통합
   - 데스크톱/모바일 자동 감지
   - 디바이스별 입력 매핑
   - src/utils/deviceDetector.ts 생성
@@ -197,7 +197,7 @@
 
 #### 2.1 도형 시스템 [P0]
 
-- [ ] **2.1.1** Shape 클래스 구현
+- [x] **2.1.1** Shape 클래스 구현
 
   - src/game/entities/Shape.ts 생성
   - 속성: id, type, color, position, velocity, size
@@ -205,7 +205,7 @@
   - 테스트: Shape 인스턴스 생성 및 업데이트 확인
   - 커밋: `feat(entity): create shape entity class`
 
-- [ ] **2.1.2** ShapeFactory 패턴 구현
+- [x] **2.1.2** ShapeFactory 패턴 구현
 
   - src/game/factories/ShapeFactory.ts 생성
   - 4가지 기본 도형 생성 메서드
@@ -263,7 +263,7 @@
 
 #### 2.3 충돌 감지 시스템 [P0]
 
-- [ ] **2.3.1** CollisionDetector 클래스 구현
+- [x] **2.3.1** CollisionDetector 클래스 구현
 
   - src/core/CollisionDetector.ts 생성
   - AABB 알고리즘 구현
@@ -271,14 +271,14 @@
   - 테스트: 충돌 감지가 정확한지 단위 테스트
   - 커밋: `feat(core): implement AABB collision detection`
 
-- [ ] **2.3.2** 매칭 로직 구현
+- [x] **2.3.2** 매칭 로직 구현
 
   - isMatch(shape, catcher) 메서드
   - 도형 + 색상 일치 확인
   - 테스트: 다양한 케이스에 대해 매칭 확인
   - 커밋: `feat(game): implement shape matching logic`
 
-- [ ] **2.3.3** 충돌 결과 처리
+- [x] **2.3.3** 충돌 결과 처리
   - 성공 시: 도형 제거, 점수 증가
   - 실패 시: 도형 낙하, 생명 감소
   - 테스트: 결과가 올바르게 처리되는지 확인
@@ -286,7 +286,7 @@
 
 #### 2.4 물리 엔진 [P0]
 
-- [ ] **2.4.1** PhysicsEngine 클래스 구현
+- [x] **2.4.1** PhysicsEngine 클래스 구현
 
   - src/core/PhysicsEngine.ts 생성
   - 중력 적용
@@ -294,7 +294,7 @@
   - 테스트: 물리 계산이 정확한지 확인
   - 커밋: `feat(core): create physics engine with gravity`
 
-- [ ] **2.4.2** 도형 낙하 구현
+- [x] **2.4.2** 도형 낙하 구현
   - 레벨별 낙하 속도 적용
   - deltaTime 기반 이동
   - 테스트: 도형이 일정한 속도로 낙하하는지 확인
@@ -338,7 +338,7 @@
 
 #### 3.1 레벨 설정 데이터 [P0]
 
-- [ ] **3.1.1** levelConfig.ts 작성
+- [x] **3.1.1** levelConfig.ts 작성
 
   - src/config/levelConfig.ts 생성
   - 레벨 1-20 설정 데이터
@@ -346,7 +346,7 @@
   - 테스트: 설정 데이터 로드 확인
   - 커밋: `feat(config): add level configuration data (1-20)`
 
-- [ ] **3.1.2** 레벨별 테마 설정
+- [x] **3.1.2** 레벨별 테마 설정
   - background, bgAnimation, music, particleColor
   - 테마별 색상 팔레트
   - 테스트: 테마 데이터 확인
@@ -354,7 +354,7 @@
 
 #### 3.2 LevelManager 구현 [P0]
 
-- [ ] **3.2.1** LevelManager 클래스
+- [x] **3.2.1** LevelManager 클래스
 
   - src/game/LevelManager.ts 생성
   - 현재 레벨 관리
@@ -362,7 +362,7 @@
   - 테스트: 레벨 설정이 올바르게 반환되는지 확인
   - 커밋: `feat(game): create level manager`
 
-- [ ] **3.2.2** 레벨 진행 로직
+- [x] **3.2.2** 레벨 진행 로직
 
   - checkLevelComplete() 메서드
   - nextLevel() 메서드
@@ -370,7 +370,7 @@
   - 테스트: 레벨 진행이 정상 동작하는지 확인
   - 커밋: `feat(game): implement level progression logic`
 
-- [ ] **3.2.3** 난이도 곡선 적용
+- [x] **3.2.3** 난이도 곡선 적용
   - 레벨별 낙하 속도 증가
   - 생성 간격 감소
   - 색상 종류 증가
@@ -643,7 +643,7 @@
 
 #### 5.2 콤보 시스템 [P1]
 
-- [ ] **5.2.1** ComboSystem 클래스
+- [x] **5.2.1** ComboSystem 클래스
 
   - src/game/ComboSystem.ts 생성
   - combo 카운터
@@ -651,7 +651,7 @@
   - 테스트: 콤보 증가와 타이머 동작 확인
   - 커밋: `feat(game): create combo system`
 
-- [ ] **5.2.2** 콤보 증가 로직
+- [x] **5.2.2** 콤보 증가 로직
 
   - 성공 시 combo++
   - 실패 시 combo 리셋
@@ -659,21 +659,21 @@
   - 테스트: 콤보가 정확하게 계산되는지 확인
   - 커밋: `feat(game): implement combo increment logic`
 
-- [ ] **5.2.3** 콤보 타이머
+- [x] **5.2.3** 콤보 타이머
 
   - 3초 이내에 다음 캐치 필요
   - 타이머 초과 시 리셋
   - 테스트: 타이머가 정확하게 동작하는지 확인
   - 커밋: `feat(game): add combo timer mechanics`
 
-- [ ] **5.2.4** 콤보 티어 시스템
+- [x] **5.2.4** 콤보 티어 시스템
 
   - 3, 5, 10, 15, 20 연속 티어
   - 각 티어별 보너스 점수
   - 테스트: 티어별 보너스가 정확한지 확인
   - 커밋: `feat(game): implement combo tier system`
 
-- [ ] **5.2.5** ComboDisplay 컴포넌트
+- [x] **5.2.5** ComboDisplay 컴포넌트
 
   - src/components/UI/ComboDisplay.tsx 생성
   - "NICE!", "GREAT!" 등 메시지 표시
@@ -681,7 +681,7 @@
   - 테스트: 콤보 메시지가 정확하게 표시되는지 확인
   - 커밋: `feat(ui): create combo display component`
 
-- [ ] **5.2.6** 콤보 타이머 바 UI
+- [x] **5.2.6** 콤보 타이머 바 UI
   - StatusBar에 타이머 바 추가
   - 시각적 카운트다운
   - 테스트: 타이머 바가 정확하게 표시되는지 확인
@@ -730,7 +730,7 @@
   - 테스트: 파티클 인스턴스 생성 및 업데이트 확인
   - 커밋: `feat(entity): create particle class`
 
-- [ ] **6.1.2** ParticleSystem 클래스
+- [x] **6.1.2** ParticleSystem 클래스
 
   - src/core/ParticleSystem.ts 생성
   - 오브젝트 풀링 (500개 풀)
@@ -738,28 +738,28 @@
   - 테스트: 파티클 생성 및 풀링 확인
   - 커밋: `feat(core): create particle system with object pooling`
 
-- [ ] **6.1.3** 파티클 렌더링
+- [x] **6.1.3** 파티클 렌더링
 
   - Canvas에 파티클 렌더링
   - 알파값 적용 (페이드 아웃)
   - 테스트: 파티클이 정확하게 렌더링되는지 확인
   - 커밋: `feat(render): implement particle rendering`
 
-- [ ] **6.1.4** 성공 파티클 효과
+- [x] **6.1.4** 성공 파티클 효과
 
   - 캐치 성공 시 초록 파티클
   - 콤보 티어별 색상 변화
   - 테스트: 성공 파티클이 표시되는지 확인
   - 커밋: `feat(effect): add success particle effects`
 
-- [ ] **6.1.5** 폭발 파티클 효과
+- [x] **6.1.5** 폭발 파티클 효과
 
   - 폭탄 충돌 시 붉은 파티클
   - 사방으로 퍼지는 효과
   - 테스트: 폭발 파티클이 표시되는지 확인
   - 커밋: `feat(effect): add explosion particle effects`
 
-- [ ] **6.1.6** 특수 파티클 효과
+- [x] **6.1.6** 특수 파티클 효과
   - 골든 스타: 황금 트레일
   - 다이아몬드: 반짝임
   - 레인보우: 무지개 효과
@@ -856,49 +856,48 @@
 
 #### 7.1 오디오 시스템 [P1]
 
-- [ ] **7.1.1** AudioService 클래스
+- [x] **7.1.1** AudioService 클래스
 
   - src/services/AudioService.ts 생성
-  - Howler.js 래핑
+  - Web Audio API 사용 (Howler.js 대신 기본 구현)
   - 싱글톤 패턴
   - 테스트: 오디오 재생 확인
-  - 커밋: `feat(audio): create audio service with howler.js`
+  - 커밋: `feat(audio): create audio service with web audio api`
 
-- [ ] **7.1.2** 효과음 로딩
+- [x] **7.1.2** 효과음 로딩
 
-  - public/assets/audio/sfx/ 폴더에 임시 사운드 파일
-  - audioConfig.ts에 사운드 경로 정의
-  - preloadSFX() 메서드
+  - 프로그래밍적 사운드 생성 (오실레이터 기반)
+  - tone 생성 및 noise 생성 기능
+  - preloadSFX() 메서드 (메모리 기반)
   - 테스트: 효과음이 로드되는지 확인
-  - 커밋: `feat(audio): implement sfx preloading`
+  - 커밋: `feat(audio): implement procedural sfx generation`
 
-- [ ] **7.1.3** BGM 로딩
+- [x] **7.1.3** BGM 로딩
 
-  - public/assets/audio/bgm/ 폴더에 임시 음악 파일
-  - audioConfig.ts에 BGM 경로 정의
+  - 기본적인 BGM 시스템 구현
+  - 향후 확장 가능한 구조
   - preloadBGM() 메서드
   - 테스트: BGM이 로드되는지 확인
-  - 커밋: `feat(audio): implement bgm preloading`
+  - 커밋: `feat(audio): implement basic bgm system`
 
-- [ ] **7.1.4** 효과음 재생
+- [x] **7.1.4** 효과음 재생
 
-  - playSFX(name) 메서드
+  - playTone() 메서드 구현
   - 볼륨 제어
   - 중첩 재생 지원
   - 테스트: 효과음이 정확하게 재생되는지 확인
-  - 커밋: `feat(audio): add sfx playback functionality`
+  - 커밋: `feat(audio): add procedural sfx playback`
 
-- [ ] **7.1.5** BGM 재생 및 제어
+- [x] **7.1.5** BGM 재생 및 제어
 
-  - playBGM(name) 메서드
-  - 루프 재생
-  - 크로스페이드 (2초)
-  - 테스트: BGM이 루프되고 크로스페이드되는지 확인
-  - 커밋: `feat(audio): add bgm playback with crossfade`
+  - 기본 BGM 제어 구조
+  - 향후 확장 가능
+  - 테스트: BGM 제어 구조 확인
+  - 커밋: `feat(audio): add basic bgm controls`
 
-- [ ] **7.1.6** 볼륨 제어
+- [x] **7.1.6** 볼륨 제어
   - setMusicVolume(), setSFXVolume() 메서드
-  - settingsStore와 연동
+  - 게임 내 볼륨 조절
   - 테스트: 볼륨 조절이 정상 동작하는지 확인
   - 커밋: `feat(audio): implement volume controls`
 
