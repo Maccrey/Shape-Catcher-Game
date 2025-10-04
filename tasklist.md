@@ -379,7 +379,7 @@
 
 #### 3.3 레벨 전환 화면 [P0]
 
-- [ ] **3.3.1** LevelTransition 컴포넌트
+- [x] **3.3.1** LevelTransition 컴포넌트
 
   - src/components/Menu/LevelTransition.tsx 생성
   - 레벨 클리어 정보 표시
@@ -387,14 +387,14 @@
   - 테스트: 컴포넌트 렌더링 확인
   - 커밋: `feat(ui): create level transition screen`
 
-- [ ] **3.3.2** 전환 애니메이션
+- [x] **3.3.2** 전환 애니메이션
 
   - Framer Motion으로 애니메이션
   - Fade in/out 효과
   - 테스트: 애니메이션이 부드럽게 동작하는지 확인
   - 커밋: `feat(animation): add level transition animations`
 
-- [ ] **3.3.3** 레벨 전환 흐름 통합
+- [x] **3.3.3** 레벨 전환 흐름 통합
   - gameStore에 gameStatus 상태 추가
   - 'levelTransition' 상태 처리
   - 자동 진행 (3초 후 다음 레벨)
@@ -403,7 +403,7 @@
 
 #### 3.4 진행도 UI [P0]
 
-- [ ] **3.4.1** ProgressBar 컴포넌트
+- [x] **3.4.1** ProgressBar 컴포넌트
 
   - src/components/UI/ProgressBar.tsx 생성
   - 현재 레벨 진행도 표시 (X/20)
@@ -411,7 +411,7 @@
   - 테스트: 진행도가 정확하게 표시되는지 확인
   - 커밋: `feat(ui): create progress bar component`
 
-- [ ] **3.4.2** gameStore 연동
+- [x] **3.4.2** gameStore 연동
   - catchCount 상태 추가
   - 캐치 성공 시 증가
   - 20개 도달 시 레벨 클리어
@@ -424,7 +424,7 @@
 
 #### 4.1 상태바 [P0]
 
-- [ ] **4.1.1** StatusBar 컴포넌트
+- [x] **4.1.1** StatusBar 컴포넌트
 
   - src/components/UI/StatusBar.tsx 생성
   - 레벨, 점수, 생명, 콤보 표시
@@ -432,7 +432,7 @@
   - 테스트: 모든 정보가 정확하게 표시되는지 확인
   - 커밋: `feat(ui): create status bar component`
 
-- [ ] **4.1.2** 생명 시스템 구현
+- [x] **4.1.2** 생명 시스템 구현
 
   - gameStore에 lives 상태 추가 (초기값 3)
   - 실패 시 lives 감소
@@ -440,7 +440,7 @@
   - 테스트: 생명 시스템이 정상 동작하는지 확인
   - 커밋: `feat(game): implement lives system`
 
-- [ ] **4.1.3** 하트 아이콘 표시
+- [x] **4.1.3** 하트 아이콘 표시
   - 생명 수만큼 하트 렌더링
   - 잃은 생명은 회색 하트
   - 테스트: 하트가 정확하게 표시되는지 확인
@@ -448,7 +448,7 @@
 
 #### 4.2 메인 메뉴 [P0]
 
-- [ ] **4.2.1** MainMenu 컴포넌트
+- [x] **4.2.1** MainMenu 컴포넌트
 
   - src/components/Menu/MainMenu.tsx 생성
   - 게임 시작 버튼
@@ -456,7 +456,7 @@
   - 테스트: 메뉴가 렌더링되고 버튼이 동작하는지 확인
   - 커밋: `feat(ui): create main menu component`
 
-- [ ] **4.2.2** 메뉴 디자인
+- [x] **4.2.2** 메뉴 디자인
 
   - 게임 타이틀
   - 버튼 스타일링 (Tailwind)
@@ -464,7 +464,7 @@
   - 테스트: 시각적 확인
   - 커밋: `style(ui): design main menu layout`
 
-- [ ] **4.2.3** 게임 시작 흐름
+- [x] **4.2.3** 게임 시작 흐름
   - startGame() 액션 구현
   - gameStatus를 'menu' → 'playing'으로 변경
   - 초기 상태 설정
@@ -473,7 +473,7 @@
 
 #### 4.3 게임 오버 화면 [P0]
 
-- [ ] **4.3.1** GameOverScreen 컴포넌트
+- [x] **4.3.1** GameOverScreen 컴포넌트
 
   - src/components/Menu/GameOverScreen.tsx 생성
   - 최종 점수 표시
@@ -482,7 +482,7 @@
   - 테스트: 게임 오버 화면이 표시되는지 확인
   - 커밋: `feat(ui): create game over screen`
 
-- [ ] **4.3.2** 게임 오버 통계
+- [x] **4.3.2** 게임 오버 통계
 
   - 도달 레벨
   - 총 캐치 수
@@ -490,7 +490,7 @@
   - 테스트: 통계가 정확하게 표시되는지 확인
   - 커밋: `feat(ui): add game over statistics`
 
-- [ ] **4.3.3** 재시작 기능
+- [x] **4.3.3** 재시작 기능
   - restartGame() 액션
   - 모든 게임 상태 초기화
   - 테스트: 재시작이 정상 동작하는지 확인
@@ -498,7 +498,7 @@
 
 #### 4.4 일시정지 기능 [P0]
 
-- [ ] **4.4.1** PauseMenu 컴포넌트
+- [x] **4.4.1** PauseMenu 컴포넌트
 
   - src/components/Menu/PauseMenu.tsx 생성
   - 재개 버튼
@@ -507,7 +507,7 @@
   - 테스트: 일시정지 메뉴가 표시되는지 확인
   - 커밋: `feat(ui): create pause menu component`
 
-- [ ] **4.4.2** 일시정지/재개 로직
+- [x] **4.4.2** 일시정지/재개 로직
 
   - pauseGame(), resumeGame() 액션
   - Esc 키로 일시정지
@@ -515,7 +515,7 @@
   - 테스트: 일시정지와 재개가 정상 동작하는지 확인
   - 커밋: `feat(game): implement pause/resume logic`
 
-- [ ] **4.4.3** 오버레이 효과
+- [x] **4.4.3** 오버레이 효과
   - 반투명 배경
   - 게임 화면 위에 표시
   - 테스트: 시각적 확인
