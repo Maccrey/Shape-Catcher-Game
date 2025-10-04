@@ -1672,15 +1672,20 @@
   - ✅ Vercel 배포 설정 완료 (vercel.json)
   - ✅ Netlify 배포 설정 완료 (netlify.toml)
   - ✅ 배포 가이드 작성 완료 (DEPLOYMENT_GUIDE.md)
+  - ✅ SEO 최적화 완료 (meta tags, Open Graph, Twitter cards)
+  - ✅ PWA 설정 완료 (manifest.json, 설치 가능)
+  - ✅ robots.txt & sitemap.xml 생성
+  - ✅ PWA 가이드 작성 (PWA_SETUP_GUIDE.md)
   - Vercel/Netlify에 실제 배포 (수동 작업 필요)
   - 도메인 연결 (선택 사항)
   - HTTPS 설정 (자동 제공)
   - 테스트: 배포된 사이트 동작 확인
   - 커밋: `deploy(prod): deploy to production environment`
 
-- [ ] **출시.4** 모니터링 설정
+- [ ] **출시.4** 모니터링 설정 (선택 사항)
   - 에러 추적 (Sentry 등)
   - 분석 도구 (Google Analytics 등)
+  - 사용자 행동 분석 (Plausible 등)
   - 테스트: 모니터링 도구 동작 확인
   - 커밋: `feat(monitoring): setup error tracking and analytics`
 
