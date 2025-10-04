@@ -1,11 +1,22 @@
-import { useEffect } from 'react';
+import { useEffect, lazy, Suspense } from 'react';
 import { Canvas } from './components/Game/Canvas';
 import { StatusBar } from './components/UI/StatusBar';
-import { MainMenu } from './components/Menu/MainMenu';
-import { PauseMenu } from './components/Menu/PauseMenu';
-import { GameOver } from './components/Menu/GameOver';
 import { useGameStore } from './store/gameStore';
 import { GameStatus } from './types/game.types';
+
+// Lazy load menu components for better initial load performance
+const MainMenu = lazy(() => import('./components/Menu/MainMenu').then(m => ({ default: m.MainMenu })));
+const PauseMenu = lazy(() => import('./components/Menu/PauseMenu').then(m => ({ default: m.PauseMenu })));
+const GameOver = lazy(() => import('./components/Menu/GameOver').then(m => ({ default: m.GameOver })));
+
+/**
+ * Loading fallback component for lazy-loaded modules
+ */
+const LoadingFallback = () => (
+  <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
+    <div className="text-white text-2xl animate-pulse">Loading...</div>
+  </div>
+);
 
 function App() {
   const {
@@ -27,7 +38,11 @@ function App() {
 
   // Show main menu if game status is MENU
   if (gameStatus === GameStatus.MENU) {
-    return <MainMenu />;
+    return (
+      <Suspense fallback={<LoadingFallback />}>
+        <MainMenu />
+      </Suspense>
+    );
   }
 
   return (
@@ -66,9 +81,11 @@ function App() {
         </div>
       </div>
 
-      {/* Overlay Menus */}
-      <PauseMenu />
-      <GameOver />
+      {/* Overlay Menus - Lazy loaded */}
+      <Suspense fallback={null}>
+        <PauseMenu />
+        <GameOver />
+      </Suspense>
 
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-10 pointer-events-none">
