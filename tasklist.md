@@ -1579,9 +1579,11 @@
   - 특수 도형 모두 확인
   - 업적 시스템 확인
   - 리더보드 확인
+  - QA 리포트 작성 완료
+  - 알려진 이슈 문서화
   - 커밋: `test(qa): complete comprehensive feature testing`
 
-- [ ] **12.5.2** 크로스 브라우저 테스트
+- [~] **12.5.2** 크로스 브라우저 테스트
 
   - Chrome, Firefox, Safari, Edge
   - 모바일: iOS Safari, Android Chrome
@@ -1604,8 +1606,10 @@
   - 색맹 모드 테스트
   - 커밋: `test(qa): complete accessibility testing`
 
-- [ ] **12.5.5** 버그 수정
-  - 발견된 모든 P0/P1 버그 수정
+- [~] **12.5.5** 버그 수정
+  - TypeScript 빌드 에러 (P0) - 수정 필요
+  - 크로스 브라우저 테스트 (P1) - 테스트 필요
+  - Reduced Motion 개선 (P1) - 개선 필요
   - 회귀 테스트
   - 커밋: `fix(bugs): resolve all critical and high priority bugs`
 

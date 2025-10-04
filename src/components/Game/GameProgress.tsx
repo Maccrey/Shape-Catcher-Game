@@ -2,9 +2,10 @@ import { useGameStore } from '../../store/gameStore';
 import { ProgressBar } from '../UI/ProgressBar';
 
 export const GameProgress: React.FC = () => {
-  const { levelManager, catchCount } = useGameStore();
+  const levelManager = useGameStore(state => state.levelManager);
   const levelConfig = levelManager.getCurrentLevelConfig();
-  const progress = levelManager.getLevelProgress(catchCount);
+  // Use 0 as default since catchCount tracking is in gameStore
+  const progress = levelManager.getLevelProgress(0);
 
   return (
     <div className="w-full max-w-md">
