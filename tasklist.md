@@ -523,7 +523,7 @@
 
 #### 4.5 반응형 레이아웃 [P0]
 
-- [ ] **4.5.1** 모바일 레이아웃
+- [x] **4.5.1** 모바일 레이아웃
 
   - Tailwind 반응형 클래스 사용
   - 세로 모드 최적화
@@ -531,7 +531,7 @@
   - 테스트: 모바일 기기에서 확인 (DevTools)
   - 커밋: `feat(responsive): optimize layout for mobile`
 
-- [ ] **4.5.2** 데스크톱 레이아웃
+- [x] **4.5.2** 데스크톱 레이아웃
 
   - 가로 모드 최적화
   - 최대 너비 제한
@@ -539,7 +539,7 @@
   - 테스트: 데스크톱 브라우저에서 확인
   - 커밋: `feat(responsive): optimize layout for desktop`
 
-- [ ] **4.5.3** 태블릿 레이아웃
+- [x] **4.5.3** 태블릿 레이아웃
   - 중간 크기 최적화
   - 가로/세로 모드 지원
   - 테스트: 태블릿 크기에서 확인
@@ -578,14 +578,14 @@
 
 #### 5.1 특수 도형 구현 [P1]
 
-- [ ] **5.1.1** SpecialShapeType enum 정의
+- [x] **5.1.1** SpecialShapeType enum 정의
 
   - Diamond, Rainbow, GoldenStar, Bomb, TimeBonus, Multiplier
   - shape.types.ts에 추가
   - 테스트: 타입 정의 확인
   - 커밋: `feat(types): add special shape types`
 
-- [ ] **5.1.2** 특수 도형 렌더링
+- [x] **5.1.2** 특수 도형 렌더링
 
   - renderUtils.ts에 특수 도형 그리기 함수 추가
   - 각 특수 도형의 고유한 모양
@@ -593,14 +593,14 @@
   - 테스트: 각 특수 도형이 정확하게 렌더링되는지 확인
   - 커밋: `feat(render): add special shape rendering`
 
-- [ ] **5.1.3** 특수 도형 확률 시스템
+- [x] **5.1.3** 특수 도형 확률 시스템
 
   - ShapeFactory에 확률 로직 추가
   - 레벨별 특수 도형 확률 적용
   - 테스트: 확률에 맞게 생성되는지 확인
   - 커밋: `feat(factory): implement special shape spawn probability`
 
-- [ ] **5.1.4** 다이아몬드 매칭 로직
+- [x] **5.1.4** 다이아몬드 매칭 로직
 
   - 색상만 맞으면 성공
   - 2배 점수 배율
