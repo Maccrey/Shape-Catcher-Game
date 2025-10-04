@@ -1385,28 +1385,28 @@
 
 #### 11.3 캐처 스킨 시스템 [P2]
 
-- [ ] **11.3.1** Skin 타입 정의
+- [x] **11.3.1** Skin 타입 정의
 
   - src/types/skin.types.ts 생성
   - Skin 인터페이스 (id, name, renderFunction)
   - 테스트: 타입 정의 확인
   - 커밋: `feat(types): define skin types`
 
-- [ ] **11.3.2** 기본 스킨 5종 구현
+- [x] **11.3.2** 기본 스킨 5종 구현
 
   - Classic, Neon, Wooden, Metal, Rainbow
   - 각 스킨의 렌더링 함수
   - 테스트: 각 스킨이 정확하게 렌더링되는지 확인
   - 커밋: `feat(skin): implement 5 catcher skins`
 
-- [ ] **11.3.3** 스킨 선택 UI
+- [x] **11.3.3** 스킨 선택 UI
 
   - Settings에 스킨 선택 추가
   - 스킨 미리보기
   - 테스트: 스킨 선택이 정상 동작하는지 확인
   - 커밋: `feat(ui): add skin selection interface`
 
-- [ ] **11.3.4** 스킨 언락 시스템
+- [x] **11.3.4** 스킨 언락 시스템
   - 특정 조건 달성 시 스킨 언락
   - persistStore에 unlockedSkins 저장
   - 테스트: 스킨 언락이 정상 동작하는지 확인
