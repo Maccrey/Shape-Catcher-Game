@@ -1508,7 +1508,7 @@
 
 #### 12.3 성능 최적화 [P1]
 
-- [ ] **12.3.1** 렌더링 최적화
+- [x] **12.3.1** 렌더링 최적화
 
   - React.memo 적용
   - useMemo, useCallback 사용
@@ -1516,7 +1516,7 @@
   - 테스트: React DevTools Profiler로 확인
   - 커밋: `perf(react): optimize component rendering`
 
-- [ ] **12.3.2** Canvas 최적화
+- [x] **12.3.2** Canvas 최적화
 
   - Dirty Rectangle 구현
   - 레이어 분리 (정적/동적)
@@ -1524,7 +1524,7 @@
   - 테스트: 60fps 유지 확인
   - 커밋: `perf(canvas): optimize canvas rendering performance`
 
-- [ ] **12.3.3** 번들 크기 최적화
+- [x] **12.3.3** 번들 크기 최적화
 
   - Code Splitting 적용
   - Tree Shaking 확인
