@@ -36,11 +36,11 @@ Shape Catcher Game을 CloudType에 배포하는 방법입니다.
 
 | 필드 | 설정값 | 설명 |
 |------|--------|------|
-| **Port** | - (비워둠) | Static Site는 포트 불필요 |
+| **Port** | `3000` | 서버 포트 번호 |
 | **Install command** | `npm ci` | 의존성 설치 (package-lock.json 기반) |
 | **Build command** | `npm run build` | TypeScript 컴파일 + Vite 빌드 |
-| **Start command** | - (비워둠) | Static Site는 시작 명령 불필요 |
-| **Health Check** | - (비워둠) | Static Site는 헬스체크 불필요 |
+| **Start command** | `npm start` | serve 패키지로 정적 파일 서빙 |
+| **Health Check** | `/` | 루트 경로 헬스체크 |
 
 **상세 빌드 설정**:
 
@@ -480,13 +480,11 @@ Headers:
 
    | 필드 | 입력값 |
    |------|--------|
-   | Port | (비워둠) |
+   | Port | `3000` |
    | Install command | `npm ci` |
    | Build command | `npm run build` |
-   | Start command | (비워둠) |
-   | Health Check | (비워둠) |
-   | Output Directory | `dist` |
-   | SPA Mode | ✅ 체크 |
+   | Start command | `npm start` |
+   | Health Check | `/` |
 
 4. **배포 실행**
    - "배포" 버튼 클릭
@@ -503,19 +501,25 @@ https://[your-project-name].cloudtype.app
 
 ```yaml
 # 프로젝트 타입
-Type: Static Site
+Type: Node.js
 
 # 필수 설정
+Port: 3000
 Install Command: npm ci
 Build Command: npm run build
-Output Directory: dist
-
-# SPA 설정
-SPA Mode: 활성화 (✅)
+Start Command: npm start
+Health Check: /
 
 # 선택 설정
 Node Version: 18.x
 Environment: NODE_ENV=production
+```
+
+**중요**: `npm start` 명령어는 `serve` 패키지를 사용하여 빌드된 정적 파일을 서빙합니다.
+```json
+"scripts": {
+  "start": "serve -s dist -l 3000"
+}
 ```
 
 ---
@@ -576,13 +580,11 @@ git push origin main
 5. **빌드 설정 입력**:
 
    ```
-   Port:              (비워둠)
+   Port:              3000
    Install command:   npm ci
    Build command:     npm run build
-   Start command:     (비워둠)
-   Health Check:      (비워둠)
-   Output Directory:  dist
-   SPA Mode:          ✅ 체크
+   Start command:     npm start
+   Health Check:      /
    ```
 
 6. **"배포" 버튼 클릭**
