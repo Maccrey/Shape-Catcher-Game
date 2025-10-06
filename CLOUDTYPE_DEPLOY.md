@@ -9,8 +9,8 @@ Shape Catcher Game을 CloudType에 배포하는 방법입니다.
 - [x] 프로덕션 빌드 성공 (68.73 KB)
 - [x] TypeScript 에러 없음
 - [x] Git 저장소 준비 완료
-- [ ] CloudType 계정 준비
-- [ ] GitHub 저장소 연동
+- [x] CloudType 계정 준비
+- [x] GitHub 저장소 연동
 
 ---
 
@@ -19,6 +19,7 @@ Shape Catcher Game을 CloudType에 배포하는 방법입니다.
 ### 1단계: CloudType 프로젝트 생성
 
 1. **CloudType 접속**
+
    - https://cloudtype.io 접속
    - GitHub 계정으로 로그인
 
@@ -29,40 +30,66 @@ Shape Catcher Game을 CloudType에 배포하는 방법입니다.
 
 ### 2단계: 빌드 설정
 
-**프로젝트 타입**: `Static Site`
+**프로젝트 타입**: `Static Site` 또는 `Node.js`
 
-**빌드 설정**:
+#### CloudType 입력 필드별 설정값
+
+| 필드 | 설정값 | 설명 |
+|------|--------|------|
+| **Port** | - (비워둠) | Static Site는 포트 불필요 |
+| **Install command** | `npm ci` | 의존성 설치 (package-lock.json 기반) |
+| **Build command** | `npm run build` | TypeScript 컴파일 + Vite 빌드 |
+| **Start command** | - (비워둠) | Static Site는 시작 명령 불필요 |
+| **Health Check** | - (비워둠) | Static Site는 헬스체크 불필요 |
+
+**상세 빌드 설정**:
+
 ```yaml
-# 빌드 명령어
-Build Command: npm run build
-
-# 빌드 디렉토리
-Output Directory: dist
+# 프로젝트 타입
+Project Type: Static Site
 
 # Node.js 버전
 Node Version: 18.x (또는 20.x)
 
 # 패키지 매니저
 Package Manager: npm
+
+# 의존성 설치 (자동 실행)
+Install Command: npm ci
+
+# 빌드 명령어
+Build Command: npm run build
+
+# 빌드 출력 디렉토리
+Output Directory: dist
+
+# 환경 변수 (선택사항)
+NODE_ENV: production
 ```
 
 **환경 변수** (필요 시):
+
 ```bash
 NODE_ENV=production
 ```
 
-### 3단계: 배포 설정
+### 3단계: 정적 파일 배포 설정
 
 **배포 구성**:
+
 ```yaml
-# 정적 파일 경로
-Static Files: /dist
+# 정적 파일 제공 경로
+Static Files Directory: dist
 
 # SPA 라우팅 (Single Page Application)
-Rewrite Rules:
-  - /* → /index.html (for SPA routing)
+# CloudType에서 "SPA" 옵션 체크
+SPA Mode: ✅ 활성화
 
-# 캐시 설정
+# 또는 수동 Rewrite 규칙:
+Rewrite Rules:
+  - /* → /index.html
+
+# 캐시 설정 (선택사항)
 Cache Headers:
   /assets/* → Cache-Control: public, max-age=31536000, immutable
   /*.js → Cache-Control: public, max-age=31536000, immutable
@@ -73,10 +100,12 @@ Cache Headers:
 ### 4단계: 배포 실행
 
 1. **설정 확인**
+
    - 모든 빌드 설정 확인
    - Git 브랜치: `main` 확인
 
 2. **배포 시작**
+
    - "배포" 버튼 클릭
    - 자동 빌드 & 배포 시작
 
@@ -105,10 +134,7 @@ Cache Headers:
   "context": {
     "main": {
       "build": {
-        "commands": [
-          "npm ci",
-          "npm run build"
-        ]
+        "commands": ["npm ci", "npm run build"]
       }
     }
   }
@@ -124,6 +150,7 @@ CloudType에서 사용할 빌드 스크립트:
 ### package.json 확인
 
 현재 설정된 스크립트:
+
 ```json
 {
   "scripts": {
@@ -137,6 +164,7 @@ CloudType에서 사용할 빌드 스크립트:
 ### 빌드 프로세스
 
 1. **TypeScript 컴파일**: `tsc`
+
    - 타입 체크
    - 에러 검증
 
@@ -174,6 +202,7 @@ dist/
 ### 1. 도메인 설정
 
 **커스텀 도메인 연결** (선택사항):
+
 1. CloudType 프로젝트 설정
 2. "도메인" 탭 이동
 3. 커스텀 도메인 추가
@@ -193,10 +222,12 @@ dist/
 ### 3. 환경별 배포
 
 **개발 환경**:
+
 - 브랜치: `develop`
 - URL: `https://dev-shape-catcher.cloudtype.app`
 
 **프로덕션 환경**:
+
 - 브랜치: `main`
 - URL: `https://shape-catcher.cloudtype.app`
 
@@ -207,12 +238,14 @@ dist/
 ### 배포 후 체크리스트
 
 1. **사이트 접속 확인**
+
    ```bash
    # CloudType 제공 URL로 접속
    https://[your-project].cloudtype.app
    ```
 
 2. **게임 기능 테스트**
+
    - [ ] 메인 메뉴 로드
    - [ ] 게임 시작
    - [ ] 레벨 진행
@@ -220,22 +253,26 @@ dist/
    - [ ] 메뉴 전환
 
 3. **PWA 테스트**
+
    - [ ] manifest.json 로드 확인
    - [ ] "홈 화면에 추가" 동작
    - [ ] Standalone 모드 동작
 
 4. **SEO 확인**
+
    - [ ] robots.txt 접근 가능
    - [ ] sitemap.xml 접근 가능
    - [ ] Meta 태그 확인 (소스 보기)
 
 5. **성능 테스트**
+
    ```bash
    # Lighthouse 실행
    lighthouse https://[your-project].cloudtype.app --view
    ```
 
    **목표 점수**:
+
    - Performance: 90+
    - Accessibility: 90+
    - Best Practices: 95+
@@ -256,30 +293,30 @@ name: CloudType Deploy
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '18'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
 
-    - name: Install dependencies
-      run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-    - name: Build
-      run: npm run build
+      - name: Build
+        run: npm run build
 
-    - name: Test build output
-      run: |
-        ls -la dist/
-        du -sh dist/
+      - name: Test build output
+        run: |
+          ls -la dist/
+          du -sh dist/
 ```
 
 ---
@@ -290,6 +327,7 @@ jobs:
 
 **원인**: Node.js 버전 불일치
 **해결**:
+
 ```yaml
 # cloudtype.json에서 Node 버전 명시
 "nodeVersion": "18"
@@ -299,6 +337,7 @@ jobs:
 
 **원인**: Rewrite 규칙 누락
 **해결**:
+
 ```yaml
 # CloudType 설정에서 SPA 옵션 활성화
 spa: true
@@ -310,6 +349,7 @@ Rewrite: /* → /index.html
 
 **원인**: Output Directory 설정 오류
 **해결**:
+
 ```yaml
 # 정확한 빌드 디렉토리 지정
 Output Directory: dist
@@ -319,6 +359,7 @@ Output Directory: dist
 
 **원인**: 의존성 설치 시간 초과
 **해결**:
+
 ```bash
 # package-lock.json 커밋 확인
 git add package-lock.json
@@ -331,17 +372,18 @@ git commit -m "chore: add package-lock.json"
 
 ## 📊 CloudType vs 다른 플랫폼
 
-| 기능 | CloudType | Vercel | Netlify |
-|------|-----------|--------|---------|
-| 한국 서버 | ✅ | ❌ | ❌ |
-| 빠른 로딩 (국내) | ✅ | ❌ | ❌ |
-| 무료 티어 | ✅ | ✅ | ✅ |
-| 자동 HTTPS | ✅ | ✅ | ✅ |
-| GitHub 연동 | ✅ | ✅ | ✅ |
-| 한국어 지원 | ✅ | ❌ | ❌ |
-| 빌드 시간 | 보통 | 빠름 | 빠름 |
+| 기능             | CloudType | Vercel | Netlify |
+| ---------------- | --------- | ------ | ------- |
+| 한국 서버        | ✅        | ❌     | ❌      |
+| 빠른 로딩 (국내) | ✅        | ❌     | ❌      |
+| 무료 티어        | ✅        | ✅     | ✅      |
+| 자동 HTTPS       | ✅        | ✅     | ✅      |
+| GitHub 연동      | ✅        | ✅     | ✅      |
+| 한국어 지원      | ✅        | ❌     | ❌      |
+| 빌드 시간        | 보통      | 빠름   | 빠름    |
 
 **CloudType 장점**:
+
 - 🇰🇷 한국 서버 (빠른 응답 속도)
 - 🇰🇷 한국어 UI/지원
 - 💰 합리적인 가격
@@ -354,6 +396,7 @@ git commit -m "chore: add package-lock.json"
 ### 1. CDN 캐싱 활용
 
 CloudType의 CDN을 통한 자동 캐싱:
+
 - 정적 파일 자동 캐싱
 - Gzip 압축 자동 적용
 - HTTP/2 지원
@@ -364,8 +407,8 @@ CloudType의 CDN을 통한 자동 캐싱:
 // src/main.tsx에 추가
 if (import.meta.env.PROD) {
   // CloudType 배포 환경에서 에러 추적
-  window.addEventListener('error', (e) => {
-    console.error('Production Error:', e);
+  window.addEventListener("error", (e) => {
+    console.error("Production Error:", e);
     // 에러 리포팅 서비스 연동
   });
 }
@@ -376,8 +419,8 @@ if (import.meta.env.PROD) {
 ```javascript
 // 성능 메트릭 수집
 if (import.meta.env.PROD) {
-  const perfData = performance.getEntriesByType('navigation')[0];
-  console.log('Load Time:', perfData.loadEventEnd - perfData.fetchStart);
+  const perfData = performance.getEntriesByType("navigation")[0];
+  console.log("Load Time:", perfData.loadEventEnd - perfData.fetchStart);
 }
 ```
 
@@ -403,12 +446,14 @@ Headers:
 ## 📞 지원 및 문서
 
 ### CloudType 공식 문서
+
 - 웹사이트: https://cloudtype.io
 - 문서: https://docs.cloudtype.io
 - 고객 지원: support@cloudtype.io
 - 커뮤니티: https://community.cloudtype.io
 
 ### Shape Catcher 관련 문서
+
 - [빠른 배포 가이드](QUICK_DEPLOY.md)
 - [종합 배포 가이드](DEPLOYMENT_GUIDE.md)
 - [배포 준비 체크리스트](DEPLOYMENT_READINESS.md)
@@ -421,22 +466,27 @@ Headers:
 ### 빠른 배포 (5분)
 
 1. **CloudType 접속 & 로그인**
+
    ```
    https://cloudtype.io
    ```
 
 2. **GitHub 저장소 연결**
+
    - 새 프로젝트 생성
    - shape_catcher_game 선택
 
-3. **빌드 설정**
-   ```yaml
-   Type: Static Site
-   Build Command: npm run build
-   Output Directory: dist
-   Node Version: 18.x
-   SPA: true
-   ```
+3. **빌드 설정 입력**
+
+   | 필드 | 입력값 |
+   |------|--------|
+   | Port | (비워둠) |
+   | Install command | `npm ci` |
+   | Build command | `npm run build` |
+   | Start command | (비워둠) |
+   | Health Check | (비워둠) |
+   | Output Directory | `dist` |
+   | SPA Mode | ✅ 체크 |
 
 4. **배포 실행**
    - "배포" 버튼 클릭
@@ -444,8 +494,28 @@ Headers:
    - 완료!
 
 ### 배포 URL
+
 ```
 https://[your-project-name].cloudtype.app
+```
+
+### 핵심 설정 요약
+
+```yaml
+# 프로젝트 타입
+Type: Static Site
+
+# 필수 설정
+Install Command: npm ci
+Build Command: npm run build
+Output Directory: dist
+
+# SPA 설정
+SPA Mode: 활성화 (✅)
+
+# 선택 설정
+Node Version: 18.x
+Environment: NODE_ENV=production
 ```
 
 ---
@@ -453,18 +523,21 @@ https://[your-project-name].cloudtype.app
 ## ✅ 체크리스트
 
 ### 배포 전
+
 - [x] 프로덕션 빌드 성공
 - [x] Git 커밋 완료
 - [ ] CloudType 계정 생성
 - [ ] GitHub 저장소 public 설정
 
 ### 배포 중
+
 - [ ] CloudType 프로젝트 생성
 - [ ] 빌드 설정 완료
 - [ ] 배포 실행
 - [ ] 빌드 로그 확인
 
 ### 배포 후
+
 - [ ] URL 접속 확인
 - [ ] 게임 기능 테스트
 - [ ] Lighthouse 점수 확인
@@ -477,20 +550,55 @@ https://[your-project-name].cloudtype.app
 
 **모든 준비가 완료되었습니다!**
 
+### Step 1: 로컬 빌드 확인
+
 ```bash
-# 1. 최종 빌드 확인
+# 최종 빌드 테스트
 npm run build
 
-# 2. Git 푸시 (아직 안 했다면)
-git push origin main
+# 빌드 결과 확인 (68.73 KB 예상)
+ls -lh dist/
+```
 
-# 3. CloudType에서 배포
-# https://cloudtype.io 에서 프로젝트 생성 및 배포
+### Step 2: Git 푸시
+
+```bash
+# 변경사항 푸시 (아직 안 했다면)
+git push origin main
+```
+
+### Step 3: CloudType 배포
+
+1. **https://cloudtype.io** 접속
+2. **GitHub 계정으로 로그인**
+3. **"새 프로젝트"** 클릭
+4. **GitHub 저장소 선택**: `shape_catcher_game`
+5. **빌드 설정 입력**:
+
+   ```
+   Port:              (비워둠)
+   Install command:   npm ci
+   Build command:     npm run build
+   Start command:     (비워둠)
+   Health Check:      (비워둠)
+   Output Directory:  dist
+   SPA Mode:          ✅ 체크
+   ```
+
+6. **"배포" 버튼 클릭**
+7. **2-3분 대기 후 완료!**
+
+### 배포 완료 후
+
+배포가 완료되면 다음 URL로 접속 가능:
+
+```
+https://[your-project-name].cloudtype.app
 ```
 
 **Shape Catcher를 CloudType에 배포하세요! 🎮☁️**
 
 ---
 
-*Last updated: 2025-10-05*
-*CloudType 배포 가이드 v1.0*
+_Last updated: 2025-10-05_
+_CloudType 배포 가이드 v1.1_
