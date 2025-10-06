@@ -56,12 +56,14 @@ export class InputManager {
   }
 
   private emit(action: InputAction): void {
-    // Debounce inputs
-    const now = Date.now();
-    if (now - this.lastInputTime < INPUT_DEBOUNCE_TIME) {
-      return;
+    // Debounce only for non-movement actions
+    if (action !== InputAction.MOVE_LEFT && action !== InputAction.MOVE_RIGHT) {
+      const now = Date.now();
+      if (now - this.lastInputTime < INPUT_DEBOUNCE_TIME) {
+        return;
+      }
+      this.lastInputTime = now;
     }
-    this.lastInputTime = now;
 
     const callbacks = this.callbacks.get(action);
     if (callbacks) {

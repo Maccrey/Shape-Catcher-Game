@@ -180,12 +180,18 @@ export class GameEngine {
     // Update particle system
     this.particleSystem.update(deltaTime);
 
-    // Handle continuous movement for held keys
+    // Handle continuous input for held keys
     if (this.inputManager.isKeyDown('ArrowLeft')) {
       gameState.moveCatcherLeft();
     }
     if (this.inputManager.isKeyDown('ArrowRight')) {
       gameState.moveCatcherRight();
+    }
+    if (this.inputManager.isKeyDown('ArrowUp')) {
+      gameState.changeCatcherShape();
+    }
+    if (this.inputManager.isKeyDown('ArrowDown')) {
+      gameState.changeCatcherColor();
     }
 
     // Update catcher

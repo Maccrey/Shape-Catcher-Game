@@ -14,7 +14,7 @@ export const CATCHER_SPEED = 50;
 // Shape properties
 export const SHAPE_SIZE = 40;
 export const SHAPE_SPAWN_MARGIN = 20;
-export const SHAPE_FALL_SPEED_BASE = 0.15;
+export const SHAPE_FALL_SPEED_BASE = 0.05;
 
 // Combo system
 export const COMBO_TIMEOUT = 3000; // 3 seconds
