@@ -9,12 +9,12 @@ export const FRAME_TIME = 1000 / FPS;
 // Catcher properties
 export const CATCHER_HEIGHT = 60;
 export const CATCHER_WIDTH = 60;
-export const CATCHER_SPEED = 25;
+export const CATCHER_SPEED = 12.5;
 
 // Shape properties
 export const SHAPE_SIZE = 40;
 export const SHAPE_SPAWN_MARGIN = 20;
-export const SHAPE_FALL_SPEED_BASE = 0.00015;
+export const SHAPE_FALL_SPEED_BASE = 0.000075;
 
 // Combo system
 export const COMBO_TIMEOUT = 3000; // 3 seconds

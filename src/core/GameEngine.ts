@@ -195,16 +195,16 @@ export class GameEngine {
 
     // Throttle shape/color changes to prevent too rapid cycling
     const now = Date.now();
-    if (this.inputManager.isKeyDown('ArrowUp')) {
-      if (now - this.lastShapeChange >= this.CHANGE_THROTTLE) {
-        gameState.changeCatcherShape();
-        this.lastShapeChange = now;
-      }
-    }
-    if (this.inputManager.isKeyDown('ArrowDown')) {
+    if (this.inputManager.isKeyDown('ArrowUp') || this.inputManager.isKeyDown('ArrowDown')) {
       if (now - this.lastColorChange >= this.CHANGE_THROTTLE) {
         gameState.changeCatcherColor();
         this.lastColorChange = now;
+      }
+    }
+    if (this.inputManager.isKeyDown(' ')) {
+      if (now - this.lastShapeChange >= this.CHANGE_THROTTLE) {
+        gameState.changeCatcherShape();
+        this.lastShapeChange = now;
       }
     }
 

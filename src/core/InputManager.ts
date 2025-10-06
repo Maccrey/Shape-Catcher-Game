@@ -97,7 +97,7 @@ export class InputManager {
         break;
       case 'ArrowUp':
         event.preventDefault();
-        this.emit(InputAction.CHANGE_SHAPE);
+        this.emit(InputAction.CHANGE_COLOR);
         break;
       case 'ArrowDown':
         event.preventDefault();
