@@ -13,9 +13,13 @@ export const GameOver: React.FC = () => {
     gameTime
   } = useGameStore();
 
+  console.log('GameOver render - status:', gameStatus);
+
   if (gameStatus !== GameStatus.GAME_OVER) {
     return null;
   }
+
+  console.log('GameOver showing!');
 
   const currentLevel = levelManager.getCurrentLevel();
   const maxCombo = comboSystem.getMaxCount();
@@ -43,8 +47,8 @@ export const GameOver: React.FC = () => {
   const seconds = totalTime % 60;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80">
-      <div className="bg-gray-900 rounded-lg p-8 max-w-lg w-full mx-4 text-white">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black bg-opacity-90">
+      <div className="bg-gray-900 rounded-lg p-8 max-w-lg w-full mx-4 text-white shadow-2xl">
         {/* Header */}
         <div className="text-center mb-6">
           <h2 className="text-4xl font-bold text-red-400 mb-2">Game Over</h2>
