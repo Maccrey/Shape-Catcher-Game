@@ -9,7 +9,7 @@ export const FRAME_TIME = 1000 / FPS;
 // Catcher properties
 export const CATCHER_HEIGHT = 60;
 export const CATCHER_WIDTH = 60;
-export const CATCHER_SPEED = 5;
+export const CATCHER_SPEED = 10;
 
 // Shape properties
 export const SHAPE_SIZE = 40;
