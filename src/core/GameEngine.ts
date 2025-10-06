@@ -42,6 +42,11 @@ export class GameEngine {
   /** Timestamp of the last shape spawn to control spawn intervals */
   private lastShapeSpawn: number = 0;
 
+  /** Timestamps for throttling shape/color changes */
+  private lastShapeChange: number = 0;
+  private lastColorChange: number = 0;
+  private readonly CHANGE_THROTTLE = 150; // milliseconds between changes
+
   /**
    * Creates a new GameEngine instance
    * Initializes all subsystems and binds callbacks
@@ -187,11 +192,20 @@ export class GameEngine {
     if (this.inputManager.isKeyDown('ArrowRight')) {
       gameState.moveCatcherRight();
     }
+
+    // Throttle shape/color changes to prevent too rapid cycling
+    const now = Date.now();
     if (this.inputManager.isKeyDown('ArrowUp')) {
-      gameState.changeCatcherShape();
+      if (now - this.lastShapeChange >= this.CHANGE_THROTTLE) {
+        gameState.changeCatcherShape();
+        this.lastShapeChange = now;
+      }
     }
     if (this.inputManager.isKeyDown('ArrowDown')) {
-      gameState.changeCatcherColor();
+      if (now - this.lastColorChange >= this.CHANGE_THROTTLE) {
+        gameState.changeCatcherColor();
+        this.lastColorChange = now;
+      }
     }
 
     // Update catcher
