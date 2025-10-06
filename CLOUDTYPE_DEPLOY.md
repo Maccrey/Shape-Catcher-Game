@@ -199,17 +199,38 @@ dist/
 
 ## 🌐 배포 후 설정
 
-### 1. 도메인 설정
+### 1. 도메인 확인 및 설정
+
+**CloudType 자동 도메인 확인**:
+
+1. **CloudType 대시보드 접속**
+   - https://cloudtype.io 로그인
+   - 배포한 프로젝트 선택
+
+2. **도메인 확인 방법**
+   - 프로젝트 상세 페이지에서 "도메인" 또는 "URL" 섹션 확인
+   - 자동으로 할당된 URL 복사
+   - 형식: `https://port-3000-[프로젝트ID].cloudtype.app`
+
+3. **도메인이 안 보이는 경우**
+   - "설정" → "포트" 섹션 확인
+   - Port 3000이 Public으로 설정되어 있는지 확인
+   - Public 포트가 없으면 "포트 추가" 클릭:
+     ```
+     Port: 3000
+     Type: HTTP
+     Public: ✅ 체크
+     ```
 
 **커스텀 도메인 연결** (선택사항):
 
-1. CloudType 프로젝트 설정
-2. "도메인" 탭 이동
-3. 커스텀 도메인 추가
+1. CloudType 프로젝트 "도메인" 탭 이동
+2. "커스텀 도메인 추가" 클릭
+3. 도메인 입력 (예: game.yourdomain.com)
 4. DNS 레코드 설정:
    ```
    Type: CNAME
-   Name: @ (또는 서브도메인)
+   Name: game (또는 @)
    Value: [CloudType 제공 URL]
    ```
 
@@ -366,6 +387,52 @@ git add package-lock.json
 git commit -m "chore: add package-lock.json"
 
 # CloudType 빌드 타임아웃 증가 (설정에서)
+```
+
+### 문제 5: 도메인이 안 보임
+
+**증상**:
+```
+서버는 시작되었지만 (localhost:3000)
+CloudType에서 접속할 도메인을 찾을 수 없음
+```
+
+**원인**: Port가 Public으로 노출되지 않음
+
+**해결 방법**:
+
+1. **CloudType 대시보드로 이동**
+   - 프로젝트 선택
+   - "설정" 탭 클릭
+
+2. **포트 설정 확인**
+   - "포트" 또는 "Port" 섹션 찾기
+   - Port 3000이 있는지 확인
+
+3. **Public 포트 추가** (없는 경우)
+   - "포트 추가" 또는 "Add Port" 클릭
+   - 다음과 같이 설정:
+     ```
+     Container Port: 3000
+     Protocol: HTTP
+     Public: ✅ (체크 필수!)
+     ```
+
+4. **도메인 확인**
+   - 저장 후 프로젝트 대시보드로 돌아가기
+   - "URL" 또는 "도메인" 섹션에 URL 표시됨
+   - 형식: `https://port-3000-xxxxx.cloudtype.app`
+
+5. **재배포** (필요 시)
+   - 포트 설정 변경 후 재배포가 필요할 수 있음
+   - "재배포" 버튼 클릭
+
+**확인 방법**:
+```bash
+# 할당된 URL로 접속 테스트
+curl https://port-3000-xxxxx.cloudtype.app
+
+# 또는 브라우저에서 직접 접속
 ```
 
 ---
